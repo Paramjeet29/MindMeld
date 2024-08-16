@@ -52,7 +52,7 @@ userRoutes.post('/signup',async(c)=>{
         return c.status(403)
       }
       const token =await sign({id:user.id},c.env.JWT_SECRET)
-      c.header('Authorization',"Bearer"+`${token}`);
+      c.header('Authorization',"Bearer "+`${token}`);
       return c.text(token)
     }
     catch(err){
