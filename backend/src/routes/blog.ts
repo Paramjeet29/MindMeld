@@ -2,7 +2,7 @@ import { Hono } from "hono";
 import { PrismaClient } from '@prisma/client/edge'
 import { withAccelerate } from '@prisma/extension-accelerate'
 import { sign,verify} from 'hono/jwt'
-
+import {createPostInput, CreatePostInput,updatePostInput,UpdatePostInput} from '@paramjeet29/common'
 
 export const blogRoutes= new Hono<{
     Bindings:{
@@ -31,9 +31,10 @@ blogRoutes.use('/*', async (c, next) => {
     else{
         c.set("userId",payload.id)
         return await next();
-    }
-    
+    }  
 })
+
+
 
 blogRoutes.post('/',async(c)=>{
     const userId=c.get('userId');
@@ -42,6 +43,11 @@ blogRoutes.post('/',async(c)=>{
         
     }).$extends(withAccelerate())
     const body=await c.req.json();
+    const {success}=createPostInput.safeParse(body);
+    if(!success){
+        c.status(400);
+        return c.json("wrong input");
+    }
     
     const blog=await prisma.post.create({
         data:{
@@ -63,9 +69,13 @@ blogRoutes.post('/',async(c)=>{
     }).$extends(withAccelerate())
 
     const body=await c.req.json();
-
+    const {success}=updatePostInput.safeParse(body);
+    if(!success){
+        c.status(400);
+        return c.json("wrong input");
+    }
     try{
-         prisma.post.update({
+        const updatedPost= await prisma.post.update({
             where: {
                 id:body.id,
                 authorId:userId
@@ -75,7 +85,7 @@ blogRoutes.post('/',async(c)=>{
                 content:body.content
             }
         })
-        return c.json("blog updated successfully");
+        return c.json({ message: "Blog updated successfully", post: updatedPost });
     }
     catch(err:any){
         c.status(400)

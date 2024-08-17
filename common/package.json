@@ -1,6 +1,9 @@
 {
   "name": "@paramjeet29/common",
-  "version": "1.0.0",
+  "version": "1.0.1",
+  "publishConfig": {
+    "access": "public"
+  },
   "description": "",
   "main": "dist/index.js",
   "scripts": {
@@ -8,5 +11,8 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "zod": "^3.23.8"
+  }
 }
