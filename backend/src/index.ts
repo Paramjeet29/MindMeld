@@ -5,7 +5,7 @@ import { withAccelerate } from '@prisma/extension-accelerate'
 import { verify } from 'hono/jwt'
 import { userRoutes } from './routes/user'
 import { blogRoutes } from './routes/blog'
-
+import { cors } from 'hono/cors'
 type Variables = {
   userId: string
 }
@@ -16,6 +16,7 @@ const app = new Hono<{
   },
   Variables:Variables
 }>();
+
 
 
 app.route('/api/v1/user',userRoutes)

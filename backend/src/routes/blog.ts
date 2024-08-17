@@ -2,8 +2,8 @@ import { Hono } from "hono";
 import { PrismaClient } from '@prisma/client/edge'
 import { withAccelerate } from '@prisma/extension-accelerate'
 import { sign,verify} from 'hono/jwt'
-import {createPostInput, CreatePostInput,updatePostInput,UpdatePostInput} from '@paramjeet29/common'
-
+import {createPostInput,updatePostInput} from '@paramjeet29/common'
+import { cors } from "hono/cors";
 export const blogRoutes= new Hono<{
     Bindings:{
         DATABASE_URL:string,
@@ -34,7 +34,9 @@ blogRoutes.use('/*', async (c, next) => {
     }  
 })
 
-
+blogRoutes.use(cors({
+    origin: 'http://localhost:5173', // Allow only this origin
+  }));
 
 blogRoutes.post('/',async(c)=>{
     const userId=c.get('userId');
