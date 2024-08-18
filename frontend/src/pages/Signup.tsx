@@ -3,15 +3,17 @@ import { Heading } from "../components/Heading"
 import { Subheading } from "../components/Subheading"
 import { InputBox } from "../components/InputBox";
 import { Button } from "../components/Button";
-import { useRef } from "react";
+import { useContext, useRef } from "react";
 import axios from "axios";
+
+import { AuthContext } from "../context/AuthContext";
 
 export const Signup= () =>{
   const usernameRef=useRef<HTMLInputElement>(null);
   const emailRef=useRef<HTMLInputElement>(null);
   const passwordRef=useRef<HTMLInputElement>(null);
   const navigate=useNavigate();
-  
+  const {user,setUser}=useContext(AuthContext)
   
   const handleClick=()=>{
     navigate("/signin");
@@ -29,6 +31,12 @@ export const Signup= () =>{
         password:password
       })
       console.log(response.data)
+      setUser({
+        name:response.data.name,
+        email:response.data.email,
+        id:response.data.id
+      })
+      console.log(user);
       navigate('/blogs');
     }
     catch(err){

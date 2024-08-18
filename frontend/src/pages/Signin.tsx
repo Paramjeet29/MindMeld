@@ -3,15 +3,17 @@ import { Heading } from "../components/Heading"
 import { Subheading } from "../components/Subheading"
 import { InputBox } from "../components/InputBox";
 import { Button } from "../components/Button";
-import { useRef } from "react";
+import { useRef,useContext } from "react";
 import axios from "axios";
+import { AuthContext } from "../context/AuthContext";
 
 export const Signin=()=> {
   const usernameRef=useRef<HTMLInputElement>(null);
   const emailRef=useRef<HTMLInputElement>(null);
   const passwordRef=useRef<HTMLInputElement>(null);
   const navigate=useNavigate();
-  
+  const {user,setUser}=useContext(AuthContext); 
+
   const handleClick=()=>{
     navigate("/signup");
   }
@@ -26,11 +28,17 @@ export const Signin=()=> {
         email:email,
         password:password
       })
+
+      setUser({
+        name:response.data.name,
+        email:response.data.email,
+        id:response.data.id
+      })
+      console.log(user)
       navigate('/blogs');
-      console.log(response)
     }
     catch(err){
-      console.log(err);
+      console.log("error with axios"+err);
     }
   }
   return (
