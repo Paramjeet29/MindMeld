@@ -36,6 +36,7 @@ userRoutes.post('/signup',async(c)=>{
         }
       })
       const token = await sign({id: user.id}, c.env.JWT_SECRET)
+      c.header('Authorization',"Bearer "+`${token}`);
       return c.json({name:user.name,email:user.email,id:user.id})
     }
     catch(err:any){
@@ -67,6 +68,7 @@ userRoutes.post('/signup',async(c)=>{
       }
       const token =await sign({id:user.id},c.env.JWT_SECRET)
       c.header('Authorization',"Bearer "+`${token}`);
+      c.header('Access-Control-Expose-Headers', 'authorization');
       return c.json({name:user.name,email:user.email,id:user.id})
     }
     catch(err){

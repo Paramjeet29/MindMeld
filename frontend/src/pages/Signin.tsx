@@ -23,11 +23,17 @@ export const Signin=()=> {
     const password=passwordRef.current?.value;
     console.log(username,email,password)
     try{
+      
       const response=await axios.post("https://backend.paramjeetxapp.workers.dev/api/v1/user/signin",{
         name:username,
         email:email,
         password:password
       })
+      const authToken = response.headers['authorization'];
+      console.log("authtoken"+authToken)
+      if(authToken){
+        localStorage.setItem('authToken',authToken);
+      }
 
       setUser({
         name:response.data.name,

@@ -14,7 +14,9 @@ export const blogRoutes= new Hono<{
       }
     }
 >();
-
+blogRoutes.use(cors({
+    origin: 'http://localhost:5173', // Allow only this origin
+  }));
 
 blogRoutes.use('/*', async (c, next) => {
 	const jwt = c.req.header('Authorization');
@@ -94,22 +96,31 @@ blogRoutes.post('/',async(c)=>{
         return c.json({message:err.message})
     }
   })
-  blogRoutes.get('/bulk',async(c)=>{
-    const prisma = new PrismaClient({
-        datasourceUrl: c.env.DATABASE_URL,
-        
-    }).$extends(withAccelerate())
 
-    try{
-        const blog=await prisma.post.findMany()
-        c.status(200);
-        return c.json(blog)
-    }
-    catch(err){
-        c.status(404);
-        return c.json({message:"no post exists"})
+  blogRoutes.get('/bulk', async (c) => {
+    const prisma = new PrismaClient({
+      datasourceUrl: c.env.DATABASE_URL,
+    }).$extends(withAccelerate())
+  
+    try {
+      const blogs = await prisma.post.findMany({
+        include: {
+          author: {
+            select: {
+              name: true
+            }
+          }
+        }
+      })
+      console.log(blogs)
+      c.status(200);
+      return c.json(blogs)
+    } catch (err) {
+      c.status(404);
+      return c.json({ message: "no post exists" })
     }
   })
+  
   blogRoutes.get('/:id',async(c)=>{
     const prisma = new PrismaClient({
         datasourceUrl: c.env.DATABASE_URL,
