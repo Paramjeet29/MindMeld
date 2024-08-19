@@ -1,64 +1,82 @@
-import { useNavigate } from "react-router-dom"
-import { Heading } from "../components/Heading"
-import { Subheading } from "../components/Subheading"
+
+
+import { useNavigate } from "react-router-dom";
+import { Heading } from "../components/Heading";
+import { Subheading } from "../components/Subheading";
 import { InputBox } from "../components/InputBox";
 import { Button } from "../components/Button";
-import { useRef,useContext } from "react";
+import { useRef, useContext, useState } from "react";
 import axios from "axios";
 import { AuthContext } from "../context/AuthContext";
+import { Typewriter } from 'react-simple-typewriter'; // Importing the Typewriter component from the package
 
-export const Signin=()=> {
-  const usernameRef=useRef<HTMLInputElement>(null);
-  const emailRef=useRef<HTMLInputElement>(null);
-  const passwordRef=useRef<HTMLInputElement>(null);
-  const navigate=useNavigate();
-  const {user,setUser}=useContext(AuthContext); 
-
-  const handleClick=()=>{
+export const Signin = () => {
+  const usernameRef = useRef<HTMLInputElement>(null);
+  const emailRef = useRef<HTMLInputElement>(null);
+  const passwordRef = useRef<HTMLInputElement>(null);
+  const navigate = useNavigate();
+  const { user, setUser } = useContext(AuthContext); 
+  const [loading,setLoading]=useState<Boolean>(false);
+  const handleClick = () => {
     navigate("/signup");
-  }
-  const handleSubmit=async()=>{
-    const username=usernameRef.current?.value;
-    const email=emailRef.current?.value;
-    const password=passwordRef.current?.value;
-    console.log(username,email,password)
-    try{
-      
-      const response=await axios.post("https://backend.paramjeetxapp.workers.dev/api/v1/user/signin",{
-        name:username,
-        email:email,
-        password:password
-      })
+  };
+
+  const handleSubmit = async () => {
+    const username = usernameRef.current?.value;
+    const email = emailRef.current?.value;
+    const password = passwordRef.current?.value;
+    console.log(username, email, password);
+    setLoading(true);
+    try {
+      const response = await axios.post("https://backend.paramjeetxapp.workers.dev/api/v1/user/signin", {
+        email: email,
+        password: password,
+      });
       const authToken = response.headers['authorization'];
-      console.log("authtoken"+authToken)
-      if(authToken){
-        localStorage.setItem('authToken',authToken);
+      console.log("authtoken" + authToken);
+      if (authToken) {
+        localStorage.setItem('authToken', authToken);
       }
 
       setUser({
-        name:response.data.name,
-        email:response.data.email,
-        id:response.data.id
-      })
-      console.log(user)
+        name: response.data.name,
+        email: response.data.email,
+        id: response.data.id,
+      });
+      console.log(user);
       navigate('/blogs');
+    } catch (err) {
+      console.log("error with axios" + err);
     }
-    catch(err){
-      console.log("error with axios"+err);
+    finally{
+      setLoading(false);
     }
-  }
+  };
+
   return (
-
-    <div className="flex justify-center items-center h-screen w-1/2">
-      <div className="flex justify-center items-center flex-col h-auto w-full max-w-md p-6 space-y-4 bg-gray-200 border shadow-lg border-gray-300 rounded-lg ">
+    <div className="flex flex-col-reverse sm:flex-row justify-center items-center h-full w-full min-h-screen selection:bg-orange-300 ">
+      <div className="flex flex-col justify-center items-center h-auto w-full sm:w-1/2 max-w-md p-6 space-y-4 border shadow-lg border-orange-200 rounded-lg">
         <Heading content="Login to your account" />
-        <Subheading content="Don't have an account" handleClick={handleClick} label="Sign Up" />
-        <InputBox ref={usernameRef} label="Username" placeholder="Enter your name" type="text"/>
-        <InputBox ref={emailRef} label="Email" placeholder="Enter your email" type="email"/>
-        <InputBox ref={passwordRef} label="Password" placeholder="Enter your password" type="password"/>
-        <Button onSubmit={handleSubmit} />
+        <Subheading content="Don't have an account?" handleClick={handleClick} label="Sign up" />
+        <InputBox className="w-full sm:w-3/4" ref={emailRef} label="Email" placeholder="Enter your email" type="email" />
+        <InputBox className="w-full sm:w-3/4" ref={passwordRef} label="Password" placeholder="Enter your password" type="password" />
+        <Button onSubmit={handleSubmit} loading={loading} />
       </div>
-  </div>
-
-  )
-}
+      <div className="w-full sm:w-1/2 flex justify-center items-center h-full bg-orange-100">
+        <div className="flex items-center justify-center text-yellow-800 p-6">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-center">
+            <Typewriter
+              words={['Welcome to MindMeld!', 'Explore the posts', 'Join the conversation']}
+              loop={0} 
+              cursor
+              cursorStyle='_'
+              typeSpeed={100}
+              deleteSpeed={50}
+              delaySpeed={1000}
+            />
+          </h1>
+        </div>
+      </div>
+    </div>
+  );
+};

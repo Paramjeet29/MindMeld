@@ -5,7 +5,7 @@
     "deploy": "wrangler deploy --minify src/index.ts"
   },
   "dependencies": {
-    "@paramjeet29/common": "^1.0.1",
+    "@paramjeet29/common": "^1.0.2",
     "@prisma/client": "^5.18.0",
     "@prisma/extension-accelerate": "^1.1.0",
     "cors": "^2.8.5",

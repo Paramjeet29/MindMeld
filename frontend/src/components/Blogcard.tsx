@@ -40,14 +40,18 @@ interface BlogcardProps {
 
 const Blogcard: React.FC<BlogcardProps> = ({ blog }) => {
   return (
-    <div className="p-4 border-b-2 rounded shadow ">
-      <p className="text-sm text-gray-500">{blog.author.name}</p>
+    blog.published && (
+      <div  className="p-4 border-b-2 rounded shadow font-mono ">
+      <button className='flex space-x-1' >
+        <span className=' flex w-6 h-full bg-amber-300 justify-center items-center rounded-full'>{blog.author.name[0].toUpperCase()}</span>
+        <p className="text-sm text-yellow-800 font-semibold">{blog.author.name}</p>
+      </button>
       <h2 className="text-xl font-bold">{blog.title}</h2>
-      <p>{blog.content}</p>
-      
+      <p className='text-yellow-900'>{blog.content}</p>
       {/* <p className="text-sm text-gray-500">Published: {blog.published ? 'Yes' : 'No'}</p> */}
       <p className="text-xs text-gray-500">{timeAgo(blog.createdAt)}</p>
     </div>
+    )
   );
 };
 

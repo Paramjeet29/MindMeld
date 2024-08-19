@@ -5,7 +5,11 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        sans: ['Lora', 'serif'], // Apply the Lora font as a fallback for sans serif
+      },
+    },
   },
   plugins: [],
 }

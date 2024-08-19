@@ -57,6 +57,7 @@ blogRoutes.post('/',async(c)=>{
         data:{
             title:body.title,
             content:body.content,
+            published:body.published,
             authorId:userId,
         }})
 
@@ -113,6 +114,10 @@ blogRoutes.post('/',async(c)=>{
         }
       })
       console.log(blogs)
+      if(blogs.length===0){
+        c.status(404)
+        return c.json("no post exists")
+      }
       c.status(200);
       return c.json(blogs)
     } catch (err) {
