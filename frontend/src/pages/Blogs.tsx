@@ -2,6 +2,8 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Blogcard } from "../components/Blogcard";
+import 'react-loading-skeleton/dist/skeleton.css'
+import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 interface blogInterface {
     id: string;
     title: string;
@@ -51,15 +53,19 @@ export const Blogs = () => {
     }, []);
 
     if (loading) {
-        return <div>
-            Loading.....
+        return <div className="w-full mt-7 flex justify-center items-center">
+        <SkeletonTheme baseColor="#FED7AA"  height={100} width={700} highlightColor="#ffffff">
+            <p>
+            <Skeleton count={20} />
+            </p>
+        </SkeletonTheme>
         </div>;
     }
 
     return (
-        <div className="flex max-w-full mb-7 flex-wrap mt-7 items-left justify-center bg-color-200 ">
-            <div className="mx-4 flex-row w-full md:w-[40%]">
-                {error ? (
+        <div className="flex max-w-full mb-7 flex-wrap mt-7 items-left justify-center bg-color-200 selection:bg-orange-400">
+            <div className="mx-4 flex-row w-full md:w-[50%]">
+                {error ? (  
                     <p className="text-red-500">{error}</p>
                 ) : blogs.length === 0 ? (
                     <p>No blogs to show</p>

@@ -1,6 +1,8 @@
 import { useRef, useState } from "react"
 import { TextArea } from "../components/TextArea"
 import axios from "axios"
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 export const CreateBlog = () => {
     const titleRef=useRef<HTMLTextAreaElement>(null)
     const descRef=useRef<HTMLTextAreaElement>(null)
@@ -8,11 +10,20 @@ export const CreateBlog = () => {
 
     const handleClick = async(e: React.FormEvent) =>{
         e.preventDefault();
-        const title=titleRef.current?.value;
-        const desc=descRef.current?.value;
+        const title = titleRef.current?.value;
+        const desc = descRef.current?.value;
+
+        // Validate that the title and description are not just whitespace
+        if (!title || !desc || !/\S/.test(title) || !/\S/.test(desc)) {
+            toast.error("Title and description cannot be blank or just whitespace", {
+                toastId: `validation-error-${Date.now()}`,
+            });
+            return;
+        }
         const token =localStorage.getItem('authToken')
         setLoading(true);
         try{
+            if(title==" "){}
             const response=await axios.post("https://backend.paramjeetxapp.workers.dev/api/v1/blog",{
                 title:title,
                 content:desc,
@@ -23,7 +34,9 @@ export const CreateBlog = () => {
                 }
             })
             if(response.status===200){
-                alert("published");  
+                toast.success("Successfully created Blog!",{
+                    toastId: `login-success-${Date.now()}`
+                  });
                 if (titleRef.current) titleRef.current.value = '';
                 if (descRef.current) descRef.current.value = '';
                 
@@ -82,6 +95,21 @@ export const CreateBlog = () => {
                            ):"Publish" }
                     </span>
             </button>
+            <ToastContainer
+            position="top-left"
+            autoClose={2000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            className="text-sm font-medium"  // Tailwind classes
+            toastClassName="bg-orange-300 text-gray-900 rounded-lg shadow-lg p-4"  // Custom toast styling
+            bodyClassName="flex items-center justify-center space-x-2"
+            closeButton={false}  // Use default close button or customize it
+          />
             </div>
         </form>
     </div>
