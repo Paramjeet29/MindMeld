@@ -17,11 +17,14 @@
     "@fortawesome/react-fontawesome": "^0.2.2",
     "@paramjeet29/common": "^1.0.2",
     "axios": "^1.7.4",
+    "flowbite": "^2.5.1",
+    "flowbite-react": "^0.10.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-loading-skeleton": "^3.4.0",
     "react-router-dom": "^6.26.1",
-    "react-simple-typewriter": "^5.0.1"
+    "react-simple-typewriter": "^5.0.1",
+    "react-toastify": "^10.0.5"
   },
   "devDependencies": {
     "@eslint/js": "^9.9.0",

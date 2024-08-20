@@ -6,6 +6,7 @@ import { Blogs } from "./pages/Blogs"
 import { AuthProvider } from "./context/AuthContext"
 import { Appbar } from "./components/Appbar"
 import { CreateBlog } from "./pages/CreateBlog"
+import { Profile } from "./pages/Profile"
 function App() {
   return (
     <AuthProvider>
@@ -17,6 +18,7 @@ function App() {
         <Route path="/blog/:id" element={<><Appbar/> <Blog/></>} />
         <Route path="/blogs" element={<> <Appbar/><Blogs /></>} />
         <Route path="/createblog" element={<> <Appbar/><CreateBlog /></>}/>
+        <Route path="/profile" element={<> <Appbar/><Profile /></>}/>
       </Routes>
     </BrowserRouter>
     </AuthProvider>

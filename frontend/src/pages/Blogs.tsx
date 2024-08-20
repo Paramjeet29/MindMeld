@@ -29,7 +29,11 @@ export const Blogs = () => {
                     }
                 });
                 console.log(response.data)
-                setBlogs(response.data);
+                const sortedBlogs = response.data.sort(
+                    (a: blogInterface, b: blogInterface) =>
+                        new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+                );
+                setBlogs(sortedBlogs);
                 console.log("blogs "+blogs);
             } catch (error) {
                 if(blogs.length === 0)
@@ -53,20 +57,21 @@ export const Blogs = () => {
     }
 
     return (
-        <div className="flex mt-7 items-left justify-center bg-color-200 ">
-            <div className="mx-4 flex-col w-[40%]">
+        <div className="flex max-w-full mb-7 flex-wrap mt-7 items-left justify-center bg-color-200 ">
+            <div className="mx-4 flex-row w-full md:w-[40%]">
                 {error ? (
                     <p className="text-red-500">{error}</p>
                 ) : blogs.length === 0 ? (
                     <p>No blogs to show</p>
                 ) : (
                     blogs.map((blog) => (
-                        <div  key={blog.id}>
+                        <div className="h-auto"  key={blog.id}>
                             <Blogcard  blog={blog} />
                         </div>
                     ))
                 )}
             </div>
         </div>
+        
     );
 };

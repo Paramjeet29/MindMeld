@@ -41,16 +41,19 @@ interface BlogcardProps {
 const Blogcard: React.FC<BlogcardProps> = ({ blog }) => {
   return (
     blog.published && (
-      <div  className="p-4 border-b-2 rounded shadow font-mono ">
-      <button className='flex space-x-1' >
-        <span className=' flex w-6 h-full bg-amber-300 justify-center items-center rounded-full'>{blog.author.name[0].toUpperCase()}</span>
-        <p className="text-sm text-yellow-800 font-semibold">{blog.author.name}</p>
-      </button>
-      <h2 className="text-xl font-bold">{blog.title}</h2>
-      <p className='text-yellow-900'>{blog.content}</p>
-      {/* <p className="text-sm text-gray-500">Published: {blog.published ? 'Yes' : 'No'}</p> */}
-      <p className="text-xs text-gray-500">{timeAgo(blog.createdAt)}</p>
-    </div>
+      <div   className="relative p-4 mb-2 h-auto  border-b-2 rounded shadow font-mono bg-orange-200">
+        <div className='flex  max-w-full justify-center items-center mb-2 '>
+          <button className='space-x-1' >
+            <span className=' flex w-8 h-8 bg-orange-400 justify-center items-center rounded-full'>{blog.author.name[0].toUpperCase()}</span>
+            <p className="flex w-6 justify-center items-center text-sm text-yellow-800 font-semibold">@{blog.author.name}</p>
+          </button>
+        </div>
+        <h2 className="text-xl font-bold font-serif">{blog.title.toUpperCase()}</h2>
+        <p className='text-yellow-900 font-serif pb-5'>{blog.content}</p>
+        <p className="absolute bottom-2 left-4 text-xs text-gray-500 ">{timeAgo(blog.createdAt)}</p>
+      </div>
+          
+          
     )
   );
 };

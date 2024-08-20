@@ -64,7 +64,7 @@ export const Signup= () =>{
               words={['Welcome to MindMeld!', 'Explore the posts', 'Join the conversation']}
               loop={0} // Infinite loop
               cursor
-              cursorStyle='_'
+              cursorStyle='|'
               typeSpeed={100}
               deleteSpeed={50}
               delaySpeed={1000}
