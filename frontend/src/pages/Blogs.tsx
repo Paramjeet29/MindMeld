@@ -53,18 +53,18 @@ export const Blogs = () => {
     }, []);
 
     if (loading) {
-        return <div className="w-full mt-7 flex justify-center items-center">
-        <SkeletonTheme baseColor="#FED7AA"  height={100} width={700} highlightColor="#ffffff">
-            <p>
+        return( <div className="w-full mt-7 flex justify-center items-center">
+        <SkeletonTheme baseColor="#FED7AA" height={150} width={700} highlightColor="#ffffff">
+            <p >
             <Skeleton count={20} />
             </p>
         </SkeletonTheme>
-        </div>;
+        </div>)
     }
 
     return (
         <div className="flex max-w-full mb-7 flex-wrap mt-7 items-left justify-center bg-color-200 selection:bg-orange-400">
-            <div className="mx-4 flex-row w-full md:w-[50%]">
+            <div className="mx-4 flex-row w-[90%] md:w-[80%] lg:w-[50%]">
                 {error ? (  
                     <p className="text-red-500">{error}</p>
                 ) : blogs.length === 0 ? (

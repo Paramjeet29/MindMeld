@@ -49,8 +49,8 @@ const Blogcard: React.FC<BlogcardProps> = ({ blog }) => {
             <p className="flex w-6 justify-center items-center text-sm text-yellow-800 font-semibold">@{blog.author.name }</p>
           </button>
         </div>
-        <p className="text-xl font-bold font-serif text-yellow-950 break-words">{blog.title.toUpperCase()}</p>
-        <p className="text-yellow-900 text-sm font-serif pb-5 break-words">{blog.content.length > 100 ? blog.content.slice(0, 100) + "....." : blog.content}</p>
+        <p className="text-xl font-bold font-serif text-yellow-950 break-words">{blog.title.length > 30 ? blog.title.toUpperCase().slice(0, 30) + " ....." : blog.title.toUpperCase()}</p>
+        <p className="text-yellow-900 text-sm font-serif pb-5 break-words">{blog.content.length > 100 ? blog.content.slice(0, 100) + " ....." : blog.content}</p>
         <p className="absolute bottom-2 left-4 text-xs text-gray-500">{timeAgo(blog.createdAt)}</p>
       </div>
     )

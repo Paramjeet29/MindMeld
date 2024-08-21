@@ -37,8 +37,8 @@ export const Appbar = () => {
   }
 
   return (
-    <div className="flex justify-center h-16 selection:bg-orange-300 md:w-full sm:w-screen px-4 md:px-0">
-      <div className="flex items-center border-b-2 border-yellow-900 w-full md:w-[50%] ">
+    <div className="flex justify-center items-center h-16 selection:bg-orange-300  lg:w-full sm:w-screen px-10 md:px-0">
+      <div className="flex items-center justify-center border-b-2 border-yellow-900 pb-2 w-full md:mx-[10%] lg:w-[50%] ">
         <div className="font-bold md:text-xl sm:text-sm w-full font-serif "><button className="hover:text-yellow-900" onClick={handleClickBar}>MindMeld</button></div>
         <div className="flex items-center space-x-4 ml-auto">
           <button 
@@ -58,11 +58,11 @@ export const Appbar = () => {
             <Dropdown.Header>
               <span className="block text-sm  ">{user?.name}</span>
               <span className="block truncate text-sm font-medium">{user?.email}</span>
-            </Dropdown.Header>
-            <Dropdown.Item onClick={handleProfile} icon={HiViewGrid}>Profile</Dropdown.Item>
-            <Dropdown.Item  icon={HiCog}>Settings</Dropdown.Item>
+            </Dropdown.Header >
+            <Dropdown.Item className="hover:bg-orange-300 hover:ring-1 hover:ring-orange-800  ease-in-out hover:shadow-2xl" onClick={handleProfile} icon={HiViewGrid}>Profile</Dropdown.Item>
+            <Dropdown.Item className="hover:bg-orange-300 hover:ring-1 hover:ring-orange-800  ease-in-out hover:shadow-2xl" icon={HiCog}>Settings</Dropdown.Item>
             <Dropdown.Divider />
-            <Dropdown.Item onClick={handleSignOut} icon={HiLogout}>Sign out</Dropdown.Item>
+            <Dropdown.Item className="hover:bg-orange-300 hover:ring-1 hover:ring-orange-800 hover:shadow-2xl" onClick={handleSignOut} icon={HiLogout}>Sign out</Dropdown.Item>
         </Dropdown>
           </div>
 

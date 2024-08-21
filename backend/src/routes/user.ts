@@ -79,4 +79,43 @@ userRoutes.post('/signup',async(c)=>{
       })
     }
   })
+
+  
+  userRoutes.post("/userpost", async (c) => {
+    const prisma = new PrismaClient({
+      datasourceUrl: c.env.DATABASE_URL,
+    }).$extends(withAccelerate());
+  
+    const { id } = await c.req.json();
+    console.log("Received ID:", id);
+  
+    try {
+      const response = await prisma.user.findMany({
+        where: {
+          id,
+        },
+        
+        include: {
+          posts: {
+            select: {
+              title:true,
+              content:true,
+              id:true,
+              published:true,
+              createdAt:true
+            },
+          },
+        },
+      });
+  
+      console.log("Query Response:", response);
+  
+      c.status(200);
+      return c.json(response);
+    } catch (err) {
+      console.log("Error:", err);
+      c.status(400);
+      return c.json("Can't fetch details");
+    }
+  });
   
