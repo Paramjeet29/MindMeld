@@ -51,19 +51,22 @@ export const Appbar = () => {
            <span className="hidden md:block">Write</span> 
           </button>
           
-          <div className="rounded-full bg-orange-300 flex items-center justify-center w-12 h-12 ">
-          <Dropdown label="" dismissOnClick={true} className="outline-none border-none bg-orange-100 z-10 backdrop-blur-sm font-semibold" renderTrigger={() => <span className="hover:cursor-pointer w-full h-full flex items-center font-sans justify-center text-xl hover:text-3xl  ">
+          <div className="rounded-full bg-orange-300 flex items-center justify-center w-12 h-12  ">
+          <Dropdown label="" dismissOnClick={true} className="outline-none w-[150px] border-none bg-orange-300 z-10 font-semibold" renderTrigger={() => <span className="hover:cursor-pointer w-full h-full flex items-center font-sans justify-center text-xl hover: ">
             {user?.name[0].toUpperCase()}
           </span>}>
-            <Dropdown.Header>
+          <div className="p-2 ">
+          <Dropdown.Header>
               <span className="block text-sm  ">{user?.name}</span>
               <span className="block truncate text-sm font-medium">{user?.email}</span>
             </Dropdown.Header >
-            <Dropdown.Item className="hover:bg-orange-300 hover:ring-1 hover:ring-orange-800  ease-in-out hover:shadow-2xl" onClick={handleProfile} icon={HiViewGrid}>Profile</Dropdown.Item>
-            <Dropdown.Item className="hover:bg-orange-300 hover:ring-1 hover:ring-orange-800  ease-in-out hover:shadow-2xl" icon={HiCog}>Settings</Dropdown.Item>
+            <Dropdown.Item className="hover:bg-orange-300 hover:ring-1 p-2 hover:ring-orange-800  ease-in-out hover:shadow-2xl" onClick={handleProfile} icon={HiViewGrid}>Profile</Dropdown.Item>
+            <Dropdown.Item className="hover:bg-orange-300 hover:ring-1 p-2 hover:ring-orange-800  ease-in-out hover:shadow-2xl" icon={HiCog}>Settings</Dropdown.Item>
             <Dropdown.Divider />
-            <Dropdown.Item className="hover:bg-orange-300 hover:ring-1 hover:ring-orange-800 hover:shadow-2xl" onClick={handleSignOut} icon={HiLogout}>Sign out</Dropdown.Item>
-        </Dropdown>
+            <Dropdown.Item className="hover:bg-orange-300 hover:ring-1 p-2 hover:ring-orange-800 hover:shadow-2xl" onClick={handleSignOut} icon={HiLogout}>Sign out</Dropdown.Item>
+        
+          </div>
+          </Dropdown>
           </div>
 
         </div>
