@@ -94,7 +94,6 @@ userRoutes.post('/signup',async(c)=>{
         where: {
           id,
         },
-        
         include: {
           posts: {
             select: {

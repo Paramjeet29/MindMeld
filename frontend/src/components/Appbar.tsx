@@ -3,8 +3,10 @@ import { AuthContext } from "../context/AuthContext";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPenToSquare } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from "react-router-dom";
-import { Dropdown } from "flowbite-react";
-import { HiCog, HiLogout, HiViewGrid } from "react-icons/hi";
+import { Dropdown, DropdownDivider } from "flowbite-react";
+import { HiLogout, HiViewGrid } from "react-icons/hi";
+import { HiPencilAlt } from "react-icons/hi";
+import { Feedback } from "../pages/Feedback";
 export const Appbar = () => {
   const { user } = useContext(AuthContext);
   const [iconColor, setIconColor] = useState("#1a0600");
@@ -36,6 +38,9 @@ export const Appbar = () => {
     navigate('/profile')
   }
 
+  const handleFeedback = () =>{
+    navigate('/feedback')
+  }
   return (
     <div className="flex justify-center items-center h-16 selection:bg-orange-300  lg:w-full sm:w-screen px-10 md:px-0">
       <div className="flex items-center justify-center border-b-2 border-yellow-900 pb-2 w-full md:mx-[10%] lg:w-[50%] ">
@@ -61,9 +66,12 @@ export const Appbar = () => {
               <span className="block truncate text-sm font-medium">{user?.email}</span>
             </Dropdown.Header >
             <Dropdown.Item className="hover:bg-orange-300 hover:ring-1 p-2 hover:ring-orange-800  ease-in-out hover:shadow-2xl" onClick={handleProfile} icon={HiViewGrid}>Profile</Dropdown.Item>
-            <Dropdown.Item className="hover:bg-orange-300 hover:ring-1 p-2 hover:ring-orange-800  ease-in-out hover:shadow-2xl" icon={HiCog}>Settings</Dropdown.Item>
+            
             <Dropdown.Divider />
             <Dropdown.Item className="hover:bg-orange-300 hover:ring-1 p-2 hover:ring-orange-800 hover:shadow-2xl" onClick={handleSignOut} icon={HiLogout}>Sign out</Dropdown.Item>
+
+            <DropdownDivider/>
+            <Dropdown.Item className="hover:bg-orange-300 hover:ring-1 p-2 hover:ring-orange-800  ease-in-out hover:shadow-2xl" onClick={handleFeedback} icon={HiPencilAlt}>Feedback</Dropdown.Item>
         
           </div>
           </Dropdown>
