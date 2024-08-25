@@ -16,14 +16,39 @@ const app = new Hono<{
   },
   Variables:Variables
 }>();
-
+app.use(cors({
+  origin: 'http://localhost:5173', // Allow only this origin
+}));
 
 
 app.route('/api/v1/user',userRoutes)
 app.route('/api/v1/blog',blogRoutes)
 
-//middleware
+app.post("/api/v1/feedback",async(c)=>{
+  const prisma = new PrismaClient({
+    datasourceUrl: c.env.DATABASE_URL,
+  }).$extends(withAccelerate());
 
+  const {name,email,feedback,rating}=await c.req.json();
+  try{
+    const response=await prisma.feedback.create({
+      data:{
+        name:name,
+        email:email,
+        content:feedback,
+        rating:rating,
+      }
+    })
+    console.log("Feedback created:",response);
+    c.status(200);
+    return c.json({response});
+  }
+  catch(err){
+    c.status(411);
+    return c.json("cant add feedback");
+  }
+
+})
 
 
 export default app

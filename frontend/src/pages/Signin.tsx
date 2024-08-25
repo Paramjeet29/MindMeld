@@ -3,12 +3,13 @@ import { Heading } from "../components/Heading";
 import { Subheading } from "../components/Subheading";
 import { InputBox } from "../components/InputBox";
 import { Button } from "../components/Button";
-import { useRef, useContext, useState } from "react";
+import { useRef, useContext, useState, useEffect } from "react";
 import axios from "axios";
 import { AuthContext } from "../context/AuthContext";
 import { Typewriter } from 'react-simple-typewriter'; // Importing the Typewriter component from the package
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { FeedbackModal } from "../components/FeedbackModal";
 
 export const Signin = () => {
   const usernameRef = useRef<HTMLInputElement>(null);
@@ -17,6 +18,7 @@ export const Signin = () => {
   const navigate = useNavigate();
   const { user, setUser } = useContext(AuthContext); 
   const [loading,setLoading]=useState<Boolean>(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const handleClick = () => {
     navigate("/signup");
   };
@@ -49,7 +51,7 @@ export const Signin = () => {
         });
         setTimeout(() => {
           navigate('/blogs');
-        }, 2000);
+        }, 1000);
         // navigate('/blogs');
            
       }
@@ -63,9 +65,15 @@ export const Signin = () => {
     }
   };
   
+  useEffect(()=>{
+    setIsModalOpen(true);
+  },[])
+
   return (
     <div className="flex flex-col-reverse sm:flex-row justify-center items-center h-full w-full min-h-screen  selection:bg-orange-300 ">
       <div className="flex flex-col justify-center items-center h-auto w-full sm:w-1/2 max-w-md p-6 space-y-4 border shadow-lg border-orange-200 rounded-lg">
+      <FeedbackModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+
         <Heading content="Login to your account" />
         <Subheading content="Don't have an account?" handleClick={handleClick} label="Sign up" />
         <InputBox  className="w-full sm:w-3/4 " ref={emailRef} label="Email" placeholder="Enter your email" type="email" />
