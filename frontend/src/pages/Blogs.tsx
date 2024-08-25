@@ -4,6 +4,7 @@ import axios from "axios";
 import { Blogcard } from "../components/Blogcard";
 import 'react-loading-skeleton/dist/skeleton.css'
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
+import Pagination from "../components/Pagination";
 interface blogInterface {
     id: string;
     title: string;
@@ -20,6 +21,8 @@ export const Blogs = () => {
     const [blogs, setBlogs] = useState<blogInterface[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [postsPerPge, SetPostsPerPage] = useState(10);
 
     useEffect(() => {
         const fetchDetails = async () => {
@@ -36,7 +39,6 @@ export const Blogs = () => {
                         new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
                 );
                 setBlogs(sortedBlogs);
-                console.log("blogs "+blogs);
             } catch (error) {
                 if(blogs.length === 0)
                     setError("No blog exists")
@@ -62,20 +64,37 @@ export const Blogs = () => {
         </div>)
     }
 
+    const indexOfLastBlog = currentPage * postsPerPge;
+    const indexOfFirstBlog = indexOfLastBlog - postsPerPge;
+    const currentBlogs = blogs.slice(indexOfFirstBlog, indexOfLastBlog);
+    const handlePagination = (pageNumber:number) => {
+      setCurrentPage(pageNumber);
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth',
+      });
+    }
+
     return (
-        <div className="flex max-w-full mb-7 flex-wrap mt-7 items-left justify-center bg-color-200 selection:bg-orange-400">
+        <div className="relative flex flex-col mb-[50px] flex-wrap mt-7 items-center justify-center bg-color-200 selection:bg-orange-400 ">
             <div className="mx-4 flex-row w-[90%] md:w-[80%] lg:w-[50%]">
                 {error ? (  
                     <p className="text-red-500">{error}</p>
                 ) : blogs.length === 0 ? (
                     <p>No blogs to show</p>
                 ) : (
-                    blogs.map((blog) => (
-                        <div className="h-auto"  key={blog.id}>
+                    currentBlogs.map((blog,index) => (
+                        <div className=" "  key={index}>
                             <Blogcard  blog={blog} />
                         </div>
                     ))
                 )}
+            </div>
+            
+            <div className=" translate-y-10 absolute inset-x-0 bottom-0 flex justify-center items-center ">
+                <div >
+                    <Pagination length={blogs.length} postsPerPage={postsPerPge} handlePagination={handlePagination} currentPage={currentPage} />
+                </div>
             </div>
         </div>
         

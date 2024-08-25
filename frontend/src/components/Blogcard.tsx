@@ -1,6 +1,4 @@
-
 import React from 'react';
-import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 const timeAgo = (date: string): string => {
   const now = new Date();
