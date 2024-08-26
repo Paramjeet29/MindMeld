@@ -14,10 +14,17 @@ export const Feedback = () =>{
   const [rating, setRating] = useState(3);
   
   const handleSubmit = async() =>{
-    const name=nameRef.current?.placeholder;
-    const email=emailRef.current?.placeholder;
-    const feedback=feedbackRef.current?.value;
-    const ratingNumber=rating;
+    const name = nameRef.current?.value?.trim();
+    const email = emailRef.current?.value?.trim();
+    const feedback = feedbackRef.current?.value?.trim();
+    const ratingNumber = rating;
+    
+    if (!name || !email || !feedback) {
+      toast.error("Please add all the details", {
+        toastId: `login-success-${Date.now()}`
+      });
+      return;
+    }
     setLoading(true);
     try{
       const response=await axios.post("https://backend.paramjeetxapp.workers.dev/api/v1/feedback",{

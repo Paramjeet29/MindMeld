@@ -52,7 +52,6 @@ export const Signin = () => {
         setTimeout(() => {
           navigate('/blogs');
         }, 1000);
-        // navigate('/blogs');
            
       }
     } catch (err) {

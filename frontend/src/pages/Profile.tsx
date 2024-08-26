@@ -60,8 +60,8 @@ export const Profile = () => {
     fetchingBlogs();
   }, [user?.id]);
 
-  const publishedPosts = data.filter((post) => post.published);
-  const draftPosts = data.filter((post) => !post.published);
+  const publishedPosts = data.filter((post) => post.published).slice(0, 3);
+  const draftPosts = data.filter((post) => !post.published).slice(0, 3);
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -70,28 +70,40 @@ export const Profile = () => {
   return (
     <div className="h-auto mt-10 selection:bg-orange-400">
       <div className="w-full flex justify-center items-center">
-        <div className="w-1/2 font-sans font-semibold text-sm md:text-2xl bg-orange-200 rounded-lg p-4">
-          <div className="grid grid-cols-2 gap-y-4 gap-x-2 justify-items-stretch">
-            <h2 className="col-span-1">Name: <span className="text-yellow-900">{user?.name}</span></h2>
-            <h2  className="col-span-1 justify-self-end">Email: <span className="text-yellow-900">{user?.email}</span></h2>
-            <h2  className="col-span-1 ">Password: <span className="text-yellow-900">{userDetails.password}</span></h2>
+        <div className="w-1/2 font-sans font-semibold text-sm md:text-2xl bg-orange-200 rounded-lg p-6">
+          <div className="grid grid-cols-2 gap-y-8 gap-x-2 justify-items-stretch">
+            <h2 className="col-span-2 md:col-span-1">Name: <span className="text-yellow-900">{user?.name}</span></h2>
+            <h2  className="col-span-2 md:col-span-1 md:justify-self-end">Email: <span className="text-yellow-900">{user?.email}</span></h2>
+            <h2  className="col-span-2 md:col-span-1">Password: <span className="text-yellow-900">{userDetails.password}</span></h2>
             
-            <h2  className="col-span-1 justify-self-end">Total posts published: <span className="text-yellow-900">{publishedPosts.length}</span></h2>
+            <h2  className="col-span-2 md:col-span-1 md:justify-self-end">Total posts published: <span className="text-yellow-900">{data.length}</span></h2>
           </div>
         </div>
       </div>
-      <div className="w-full flex mt-6 flex-col md:flex-row">
-        <div className="w-full md:w-1/2 flex flex-col justify-top items-center">
-          <h2 className="uppercase font-serif font-bold text-sm md:text-xl underline mb-4">Published</h2>
-          {publishedPosts.map((post) => (
-            <div className="w-3/4" key={post.id}><ProfileBlogCard blog={post} /></div>
-          ))}
+      <div className="w-full flex my-6 flex-col justify-center items-center">
+        <div className="w-full md:w-3/4 mb-6">
+          <div className="uppercase font-serif font-bold underline mb-4 text-center">
+            Published Posts
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-1">
+            {publishedPosts.map((post) => (
+              <div key={post.id}>
+                <ProfileBlogCard blog={post} />
+              </div>
+            ))}
+          </div>
         </div>
-        <div className="w-[90%] md:w-1/2 flex flex-col justify-top items-center">
-          <h2 className="uppercase font-serif font-bold text-xl underline mb-4">Draft</h2>
-          {draftPosts.map((post) => (
-            <div className="w-3/4" key={post.id}><ProfileBlogCard blog={post} /></div>
-          ))}
+        <div className="w-full md:w-3/4">
+          <div className="uppercase font-serif font-bold text-sm  underline mb-4 text-center">
+            Draft Posts
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {draftPosts.map((post) => (
+              <div key={post.id}>
+                <ProfileBlogCard blog={post} />
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </div>

@@ -1,10 +1,12 @@
 
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { Blogcard } from "../components/Blogcard";
 import 'react-loading-skeleton/dist/skeleton.css'
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import Pagination from "../components/Pagination";
+import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../context/AuthContext";
 interface blogInterface {
     id: string;
     title: string;
@@ -18,12 +20,13 @@ interface blogInterface {
 }
 
 export const Blogs = () => {
+    // const {user}=useContext(AuthContext)
     const [blogs, setBlogs] = useState<blogInterface[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
     const [currentPage, setCurrentPage] = useState(1);
-    const [postsPerPge, SetPostsPerPage] = useState(10);
-
+    const [postsPerPage, SetPostsPerPage] = useState(10);
+    const navigate=useNavigate();
     useEffect(() => {
         const fetchDetails = async () => {
             const token = localStorage.getItem('authToken');
@@ -33,7 +36,6 @@ export const Blogs = () => {
                         'Authorization': `${token}`
                     }
                 });
-                console.log(response.data)
                 const sortedBlogs = response.data.sort(
                     (a: blogInterface, b: blogInterface) =>
                         new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
@@ -64,8 +66,8 @@ export const Blogs = () => {
         </div>)
     }
 
-    const indexOfLastBlog = currentPage * postsPerPge;
-    const indexOfFirstBlog = indexOfLastBlog - postsPerPge;
+    const indexOfLastBlog = currentPage * postsPerPage;
+    const indexOfFirstBlog = indexOfLastBlog - postsPerPage;
     const currentBlogs = blogs.slice(indexOfFirstBlog, indexOfLastBlog);
     const handlePagination = (pageNumber:number) => {
       setCurrentPage(pageNumber);
@@ -73,6 +75,10 @@ export const Blogs = () => {
         top: 0,
         behavior: 'smooth',
       });
+    }
+    
+    const handleBlogClick = async(id:string) =>{
+        navigate(`/blog/${id}`);
     }
 
     return (
@@ -83,9 +89,12 @@ export const Blogs = () => {
                 ) : blogs.length === 0 ? (
                     <p>No blogs to show</p>
                 ) : (
-                    currentBlogs.map((blog,index) => (
-                        <div className=" "  key={index}>
+                    currentBlogs.map((blog) => (
+                        <div className=" "  key={blog.id}>
+                            <div onClick={()=>handleBlogClick(blog.id)}>
+                            {/* <div> */}
                             <Blogcard  blog={blog} />
+                            </div>
                         </div>
                     ))
                 )}
@@ -93,7 +102,7 @@ export const Blogs = () => {
             
             <div className=" translate-y-10 absolute inset-x-0 bottom-0 flex justify-center items-center ">
                 <div >
-                    <Pagination length={blogs.length} postsPerPage={postsPerPge} handlePagination={handlePagination} currentPage={currentPage} />
+                    <Pagination length={blogs.length} postsPerPage={postsPerPage} handlePagination={handlePagination} currentPage={currentPage} />
                 </div>
             </div>
         </div>

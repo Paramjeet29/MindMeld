@@ -38,10 +38,10 @@ interface BlogcardProps {
 const ProfileBlogCard: React.FC<BlogcardProps> = ({blog }) => {
     console.log(blog);
   return (
-    
-    <div className="relative w-full p-4 mb-2 h-auto border-b-2 hover:-translate-y-1 rounded-lg shadow-lg font-mono bg-orange-200 transition-all duration-300 ease-in-out hover:bg-orange-300 hover:shadow-2xl">
-    <div className="flex flex-col w-full justify-center items-center mb-2">
-        <p className="md:text-xl text-sm font-bold font-serif text-yellow-950 break-words max-w-full">
+    <div className='flex items-center justify-center '>
+    <div className="relative w-[90%]  flex h-auto md:h-[200px]  p-4 mb-2  border-b-2 hover:-translate-y-1 rounded-lg shadow-lg font-mono bg-orange-200 transition-all duration-300 ease-in-out hover:bg-orange-300 hover:shadow-2xl">
+    <div className="flex flex-col  w-full  items-center mb-2">
+        <p className="md:text-lg text-xs font-bold font-serif text-yellow-950 break-words max-w-full">
             {blog.title.length > 10 ? blog.title.toUpperCase().slice(0, 10) + " ....." : blog.title.toUpperCase()}
         </p>
         <p className="text-yellow-900 w-full text-xs md:text-sm font-serif pb-5 break-words max-w-full overflow-hidden text-ellipsis">
@@ -49,7 +49,8 @@ const ProfileBlogCard: React.FC<BlogcardProps> = ({blog }) => {
         </p>
         <p className="absolute bottom-2 left-4 text-xs text-gray-500">{timeAgo(blog.createdAt)}</p>
     </div>
-</div>
+    </div>
+    </div>
   );
 };
 
