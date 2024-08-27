@@ -50,9 +50,9 @@ export const Appbar = () => {
     navigate('/profile')
   }
 
-  const handleFeedback = () =>{
-    navigate('/feedback')
-  }
+  // const handleFeedback = () =>{
+  //   navigate('/feedback')
+  // }
   return (
     <div className="flex justify-center items-center h-16 selection:bg-orange-300  lg:w-full sm:w-screen px-10 md:px-0">
       <div className="flex items-center justify-center border-b-2 border-yellow-900 pb-2 w-full md:mx-[10%] lg:w-[50%] ">
@@ -81,10 +81,10 @@ export const Appbar = () => {
           </div>
           
           <div className="rounded-full bg-orange-300 flex items-center justify-center w-12 h-12  ">
-          <Dropdown label="" dismissOnClick={true} className="outline-none w-[150px] border-none bg-orange-300 z-10 font-semibold" renderTrigger={() => <span className="hover:cursor-pointer w-full h-full flex items-center font-sans justify-center text-xl hover: ">
+          <Dropdown label="" dismissOnClick={true} className="outline-none w-[160px]  border-2 border-orange-700 bg-orange-200 z-10 font-semibold" renderTrigger={() => <span className="hover:cursor-pointer w-full h-full flex items-center font-sans justify-center text-xl hover: ">
             {user?.name[0].toUpperCase()}
           </span>}>
-          <div className="p-2 ">
+          <div className=" ">
           <Dropdown.Header>
               <span className="block text-sm uppercase ">{user?.name}</span>
               <span className="block truncate text-sm font-medium">{user?.email}</span>
@@ -94,8 +94,8 @@ export const Appbar = () => {
             <Dropdown.Divider />
             <Dropdown.Item className="hover:bg-orange-300 hover:ring-1 p-2 hover:ring-orange-800 hover:shadow-2xl" onClick={handleSignOut} icon={HiLogout}>Sign out</Dropdown.Item>
 
-            <DropdownDivider/>
-            <Dropdown.Item className="hover:bg-orange-300 hover:ring-1 p-2 hover:ring-orange-800  ease-in-out hover:shadow-2xl" onClick={handleFeedback} icon={HiPencilAlt}>Feedback</Dropdown.Item>
+            {/* <DropdownDivider/>
+            <Dropdown.Item className="hover:bg-orange-300 hover:ring-1 p-2 hover:ring-orange-800  ease-in-out hover:shadow-2xl" onClick={handleFeedback} icon={HiPencilAlt}>Feedback</Dropdown.Item> */}
         
           </div>
           </Dropdown>

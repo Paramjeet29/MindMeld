@@ -2,7 +2,6 @@ import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 import axios from "axios";
 import { ProfileBlogCard } from "../components/ProfileBlogCard";
-import styles from '../components/Loader.css';
 import Loader from "../components/Loader";
 
 
@@ -86,11 +85,11 @@ export const Profile = () => {
         </div>
       </div>
       <div className="w-full flex my-6 flex-col justify-center items-center">
-        <div className="w-full md:w-3/4 mb-6">
-          <div className="uppercase font-serif font-bold underline mb-4 text-center">
+        <div className="w-full px-2 md:w-3/4 mb-6">
+          <div className="uppercase font-serif md:text-2xl hover:-translate-y-1 hover:text-orange-800 hover:cursor-pointer  font-bold underline mb-4 text-center">
             Published Posts
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-1">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 ">
             {publishedPosts.map((post) => (
               <div key={post.id}>
                 <ProfileBlogCard blog={post} />
@@ -98,11 +97,11 @@ export const Profile = () => {
             ))}
           </div>
         </div>
-        <div className="w-full md:w-3/4">
-          <div className="uppercase font-serif font-bold text-sm  underline mb-4 text-center">
+        <div className="w-full px-2 md:w-3/4">
+          <div className="uppercase font-serif md:text-2xl font-bold text-sm hover:-translate-y-1 hover:text-orange-800 hover:cursor-pointer  underline mb-4 text-center">
             Draft Posts
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-1">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 ">
             {draftPosts.map((post) => (
               <div key={post.id}>
                 <ProfileBlogCard blog={post} />
