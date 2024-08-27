@@ -2,8 +2,7 @@
 import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { Blogcard } from "../components/Blogcard";
-import 'react-loading-skeleton/dist/skeleton.css'
-import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
+import Loader from "../components/Loader";
 import Pagination from "../components/Pagination";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
@@ -57,13 +56,9 @@ export const Blogs = () => {
     }, []);
 
     if (loading) {
-        return( <div className="w-full mt-7 flex justify-center items-center">
-        <SkeletonTheme baseColor="#FED7AA" height={150} width={700} highlightColor="#ffffff">
-            <p >
-            <Skeleton count={20} />
-            </p>
-        </SkeletonTheme>
-        </div>)
+        return( 
+        <Loader/>
+        )
     }
 
     const indexOfLastBlog = currentPage * postsPerPage;
@@ -90,12 +85,12 @@ export const Blogs = () => {
                     <p>No blogs to show</p>
                 ) : (
                     currentBlogs.map((blog) => (
-                        <div className=" "  key={blog.id}>
+                        <div className=" cursor-pointer"  key={blog.id}>
                             <div onClick={()=>handleBlogClick(blog.id)}>
                             {/* <div> */}
                             <Blogcard  blog={blog} />
                             </div>
-                        </div>
+                        </div> 
                     ))
                 )}
             </div>

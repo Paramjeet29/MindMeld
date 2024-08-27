@@ -2,6 +2,9 @@ import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 import axios from "axios";
 import { ProfileBlogCard } from "../components/ProfileBlogCard";
+import styles from '../components/Loader.css';
+import Loader from "../components/Loader";
+
 
 interface UserData {
   email: string;
@@ -64,13 +67,15 @@ export const Profile = () => {
   const draftPosts = data.filter((post) => !post.published).slice(0, 3);
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return(
+     <Loader/>
+    )
   }
 
   return (
     <div className="h-auto mt-10 selection:bg-orange-400">
       <div className="w-full flex justify-center items-center">
-        <div className="w-1/2 font-sans font-semibold text-sm md:text-2xl bg-orange-200 rounded-lg p-6">
+        <div className="w-1/2 font-sans font-semibold text-sm md:text-2xl bg-orange-200  p-6">
           <div className="grid grid-cols-2 gap-y-8 gap-x-2 justify-items-stretch">
             <h2 className="col-span-2 md:col-span-1">Name: <span className="text-yellow-900">{user?.name}</span></h2>
             <h2  className="col-span-2 md:col-span-1 md:justify-self-end">Email: <span className="text-yellow-900">{user?.email}</span></h2>
@@ -97,7 +102,7 @@ export const Profile = () => {
           <div className="uppercase font-serif font-bold text-sm  underline mb-4 text-center">
             Draft Posts
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-1">
             {draftPosts.map((post) => (
               <div key={post.id}>
                 <ProfileBlogCard blog={post} />

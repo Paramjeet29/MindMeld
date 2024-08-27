@@ -40,7 +40,7 @@ interface BlogcardProps {
 const Blogcard: React.FC<BlogcardProps> = ({ blog }) => {
   return (
     blog.published && (
-      <div className="relative hover:-skew-y-1 p-4 mb-2 h-auto border-b-2 hover:-translate-y-1 rounded-lg shadow-lg font-mono bg-orange-200 transition-all duration-300 ease-in-out hover:bg-orange-300 hover:shadow-2xl">
+      <div className="relative p-4 mb-2 h-auto border-b-2 hover:-translate-y-1  shadow-lg font-mono bg-orange-200 transition-all duration-300 ease-in-out hover:bg-orange-300 hover:shadow-2xl">
         <div className="flex max-w-full justify-center items-center mb-2">
           <button className="space-x-1">
             <span className="flex w-8 h-8 bg-orange-400 justify-center items-center rounded-full">{blog.author.name[0].toUpperCase()}</span>
