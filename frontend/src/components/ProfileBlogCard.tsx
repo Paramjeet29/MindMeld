@@ -39,7 +39,7 @@ const ProfileBlogCard: React.FC<BlogcardProps> = ({blog }) => {
     console.log(blog);
   return (
     <div className='flex items-center justify-center '>
-    <div className="relative w-[98%]  flex h-auto md:h-[200px]  p-4 mb-2  border-b-2 hover:-translate-y-1  shadow-lg font-mono bg-orange-200 transition-all duration-300 ease-in-out hover:bg-orange-300 hover:shadow-2xl">
+    <div className="relative w-[98%]  flex h-[150px]  md:h-[230px]  p-4 mb-2  border-b-2 hover:-translate-y-1  shadow-lg font-mono bg-orange-200 transition-all duration-300 ease-in-out hover:bg-orange-300 hover:shadow-2xl">
     <div className="flex flex-col  w-full  items-center mb-2">
         <p className="md:text-lg text-xs font-bold font-serif text-yellow-950 break-words max-w-full">
             {blog.title.length > 10 ? blog.title.toUpperCase().slice(0, 10) + " ....." : blog.title.toUpperCase()}

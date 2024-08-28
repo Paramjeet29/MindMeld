@@ -81,7 +81,36 @@ userRoutes.post('/signup',async(c)=>{
     }
   })
 
+  userRoutes.post("/edit",async(c)=>{
+    const prisma = new PrismaClient({
+      datasourceUrl: c.env.DATABASE_URL,
+    }).$extends(withAccelerate());
+    const { name,email,id,oldpassword,newpassword } = await c.req.json();
+    console.log("Received ID:", id);
+    try {
+      const response = await prisma.user.update({
+        where: {
+          id,
+          password:oldpassword
+        },
+        data:{
+          name,
+          email,
+          password:newpassword
+        }
+      })
   
+      c.status(200);
+      return c.json(response);
+    }
+    catch(err){
+      console.log("Error:", err);
+      c.status(400);
+      return c.json("Can't update the details, check password");
+    }
+  })
+
+  //update this endpoint to update the password and other details
   userRoutes.post("/userpost", async (c) => {
     const prisma = new PrismaClient({
       datasourceUrl: c.env.DATABASE_URL,

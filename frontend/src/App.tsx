@@ -8,6 +8,8 @@ import { Appbar } from "./components/Appbar"
 import { CreateBlog } from "./pages/CreateBlog"
 import { Profile } from "./pages/Profile"
 import { Feedback } from "./pages/Feedback"
+import {Myblog} from "./pages/Myblog"
+import {MyblogDetails} from "./pages/MyblogDetails"
 
 function App() {
   return (
@@ -22,6 +24,8 @@ function App() {
         <Route path="/createblog" element={<> <Appbar/><CreateBlog /></>}/>
         <Route path="/profile" element={<> <Appbar/><Profile /></>}/>
         <Route path="/feedback" element={<><Appbar/><Feedback/></>}/>
+        <Route path="/myblog" element={<><Appbar/><Myblog/></>}/>
+        <Route path="/myblogdetails/:id" element={<><Appbar/><MyblogDetails/></>}/>
       </Routes>
     </BrowserRouter>
     </AuthProvider>

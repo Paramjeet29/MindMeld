@@ -1,115 +1,92 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 import axios from "axios";
-import { ProfileBlogCard } from "../components/ProfileBlogCard";
-import Loader from "../components/Loader";
+import { InputBox } from "../components/InputBox";
+import { Button } from "../components/Button";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
-
-interface UserData {
-  email: string;
-  name: string;
-  password: string;
-}
-
-interface BlogData {
-  id: string;
-  title: string;
-  content: string;
-  published: boolean;
-  createdAt: string;
-  authorId: string;
-}
 
 export const Profile = () => {
   const { user } = useContext(AuthContext);
-  const [userDetails, setUserDetails] = useState<UserData>({
-    email: "",
-    name: "",
-    password: "",
-  });
+  
+  const usernameRef=useRef<HTMLInputElement>(null);
+  const emailRef=useRef<HTMLInputElement>(null);
+  const oldpasswordRef=useRef<HTMLInputElement>(null);
+  const newpasswordRef=useRef<HTMLInputElement>(null);
 
-  const [data, setData] = useState<BlogData[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const[loading,setLoading]=useState(false);
 
-  useEffect(() => {
-    const fetchingBlogs = async () => {
-      if (!user?.id)
-         return;
 
-      try {
-        setIsLoading(true);
-        const response = await axios.post("https://backend.paramjeetxapp.workers.dev/api/v1/user/userpost",{ 
-            id: user.id
-          }
-        );
-
-        console.log("response", response.data);
-
-        if (response.data) {
-          setData(response.data[0].posts || []);
-          setUserDetails({
-            email: response.data[0].email || "",
-            name: response.data[0].name || "",
-            password: response.data[0].password || "",
-          });
+  const handleSubmit = async() =>{
+        if (!user?.id)
+           return;
+        
+        const name=usernameRef.current?.value;
+        const email=emailRef.current?.value;
+        const oldpassword=oldpasswordRef.current?.value;
+        const newpassword=newpasswordRef.current?.value;
+        try{
+          setLoading(true);
+          const response=await axios.post("https://backend.paramjeetxapp.workers.dev/api/v1/user/edit",{ 
+                  id: user.id,
+                  name,
+                  email,
+                  oldpassword,
+                  newpassword
+                });
+            console.log("response", response.data);
+            if(response.status===200){
+              toast.success("Successfully updated!",{
+                toastId: `login-success-${Date.now()}`
+              });
+            }
+            
         }
-      } catch (err) {
-        console.log(err);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    fetchingBlogs();
-  }, [user?.id]);
-
-  const publishedPosts = data.filter((post) => post.published).slice(0, 3);
-  const draftPosts = data.filter((post) => !post.published).slice(0, 3);
-
-  if (isLoading) {
-    return(
-     <Loader/>
-    )
+        catch(err){
+          console.log(err);
+          toast.error("Please try again!",{
+            toastId: `login-success-${Date.now()}`
+          });
+          
+        }
+        finally{
+          setLoading(false);
+        }
   }
 
+  
+
+
   return (
-    <div className="h-auto mt-10 selection:bg-orange-400">
-      <div className="w-full flex justify-center items-center">
-        <div className="w-1/2 font-sans font-semibold text-sm md:text-2xl bg-orange-200  p-6">
-          <div className="grid grid-cols-2 gap-y-8 gap-x-2 justify-items-stretch">
-            <h2 className="col-span-2 md:col-span-1">Name: <span className="text-yellow-900">{user?.name}</span></h2>
-            <h2  className="col-span-2 md:col-span-1 md:justify-self-end">Email: <span className="text-yellow-900">{user?.email}</span></h2>
-            <h2  className="col-span-2 md:col-span-1">Password: <span className="text-yellow-900">{userDetails.password}</span></h2>
-            
-            <h2  className="col-span-2 md:col-span-1 md:justify-self-end">Total posts published: <span className="text-yellow-900">{data.length}</span></h2>
-          </div>
+    <div className="h-auto w-full mt-10 selection:bg-orange-400  flex justify-center items-center">
+      
+
+        <div className="w-full px-4 md:px-0 md:w-1/2 space-y-3 ">
+        <InputBox ref={usernameRef}  label="NAME  " type="text" placeholder="Enter your name" defaultValue={user?.name} className=" "/>
+        <InputBox ref={emailRef} label="EMAIL" type="email" placeholder="Enter the email" defaultValue={user?.email} className=""/>
+        <InputBox ref={oldpasswordRef} label=" OLD PASSWORD" type="text" placeholder="Enter your old password"  className=""/>
+        <InputBox ref={newpasswordRef} label=" NEW PASSWORD" type="text" placeholder="Enter your new password "  className=""/>
+        <div className=" mt-4 w-full flex justify-center items-center">
+        <Button onSubmit={handleSubmit} loading={loading} />
         </div>
-      </div>
-      <div className="w-full flex my-6 flex-col justify-center items-center">
-        <div className="w-full px-2 md:w-3/4 mb-6">
-          <div className="uppercase font-serif md:text-2xl hover:-translate-y-1 hover:text-orange-800 hover:cursor-pointer  font-bold underline mb-4 text-center">
-            Published Posts
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 ">
-            {publishedPosts.map((post) => (
-              <div key={post.id}>
-                <ProfileBlogCard blog={post} />
-              </div>
-            ))}
-          </div>
         </div>
-        <div className="w-full px-2 md:w-3/4">
-          <div className="uppercase font-serif md:text-2xl font-bold text-sm hover:-translate-y-1 hover:text-orange-800 hover:cursor-pointer  underline mb-4 text-center">
-            Draft Posts
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 ">
-            {draftPosts.map((post) => (
-              <div key={post.id}>
-                <ProfileBlogCard blog={post} />
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-    </div>
+        <ToastContainer
+            position="top-center"
+            autoClose={2000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            className="text-sm font-medium"  // Tailwind classes
+            toastClassName="bg-orange-300 text-gray-900 rounded-lg shadow-lg p-4"  // Custom toast styling
+            bodyClassName="flex items-center justify-center space-x-2"
+            closeButton={false}  // Use default close button or customize it
+          />
+      
+     </div>
   );
 };

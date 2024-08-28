@@ -55,11 +55,11 @@ export const Feedback = () =>{
     <div className="flex flex-col space-y-4 justify-center items-center mt-10">
       <div className='w-full px-12 md:px-0 md:w-[45%] flex flex-col  '  >
         <label className="block font-semibold text-lg ">Enter your Name</label>
-        <input required className="focus:outline-none  border border-yellow-900 w-full h-10 focus:ring-1 focus:ring-orange-900 font-mono py-1 px-2 bg-orange-100 text-yellow-900 placeholder-yellow-900  " ref={nameRef} type='text' placeholder= {user?.name}></input>
+        <input required className="focus:outline-none  border border-yellow-900 w-full h-10 focus:ring-1 focus:ring-orange-900 font-mono py-1 px-2 bg-orange-100 text-yellow-900 placeholder-yellow-900  " ref={nameRef} type='text' placeholder="Your name" defaultValue={user?.name}></input>
       </div>
       <div className='w-full px-12 md:px-0 md:w-[45%] flex flex-col  '  >
         <label className="block font-semibold text-lg">Enter your Email</label>
-        <input required className="focus:outline-none  border border-yellow-900 w-full h-10 focus:ring-1 focus:ring-orange-900 font-mono py-1 px-2 bg-orange-100 text-yellow-900 placeholder-yellow-900  " ref={emailRef} type='email' placeholder= {user?.email}></input>
+        <input required className="focus:outline-none  border border-yellow-900 w-full h-10 focus:ring-1 focus:ring-orange-900 font-mono py-1 px-2 bg-orange-100 text-yellow-900 placeholder-yellow-900  " ref={emailRef} type='email' placeholder="Your email" defaultValue={user?.email}></input>
       </div>
 
       <div className='flex w-full px-12 md:px-0 md:w-[45%]  flex-col  '  >

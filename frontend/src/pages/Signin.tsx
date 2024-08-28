@@ -9,7 +9,7 @@ import { AuthContext } from "../context/AuthContext";
 import { Typewriter } from 'react-simple-typewriter'; // Importing the Typewriter component from the package
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { FeedbackModal } from "../components/FeedbackModal";
+// import { FeedbackModal } from "../components/FeedbackModal";
 
 export const Signin = () => {
   const usernameRef = useRef<HTMLInputElement>(null);
@@ -22,7 +22,6 @@ export const Signin = () => {
   const handleClick = () => {
     navigate("/signup");
   };
-
 
   const handleSubmit = async () => {
     const email = emailRef.current?.value;
@@ -39,6 +38,7 @@ export const Signin = () => {
         toast.success("Successfully signed in!",{
           toastId: `login-success-${Date.now()}`
         });
+        
         const authToken = response.headers['authorization'];
         if (authToken) {
           localStorage.setItem('authToken', authToken);
@@ -51,48 +51,35 @@ export const Signin = () => {
         });
         setTimeout(() => {
           navigate('/blogs');
-        }, 1000);
-           
-      }
-    } catch (err) {
-      console.log("Error with axios", err);
-      toast.error("Login failed. Please check your credentials and try again.",{
+        }, 1000);         
+      }  
+    } catch(err) {
+      console.error("Error with axios", err);
+      toast.error("Signup failed. Please try again.",{
         toastId: `login-success-${Date.now()}`
-      });  // Show error toast
+      });
     } finally {
       setLoading(false);
     }
   };
   
-  useEffect(()=>{
-    setIsModalOpen(true);
-  },[])
+  // useEffect(()=>{
+  //   setIsModalOpen(true);
+  // },[])
 
   return (
+  
     <div className="flex flex-col-reverse sm:flex-row justify-center items-center h-full w-full min-h-screen  selection:bg-orange-300 ">
       <div className="flex flex-col justify-center items-center h-auto w-full sm:w-1/2 max-w-md p-6 space-y-4 border shadow-lg border-orange-200 rounded-lg">
-      <FeedbackModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+      {/* <FeedbackModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} /> */}
 
         <Heading content="Login to your account" />
         <Subheading content="Don't have an account?" handleClick={handleClick} label="Sign up" />
         <InputBox  className="w-full sm:w-3/4 " ref={emailRef} label="Email" placeholder="Enter your email" type="email" />
         <InputBox  className="w-full sm:w-3/4" ref={passwordRef} label="Password" placeholder="Enter your password" type="password" />
         <Button onSubmit={handleSubmit} loading={loading} />
-        <ToastContainer
-            position="top-center"
-            autoClose={2000}
-            hideProgressBar={false}
-            newestOnTop={false}
-            closeOnClick
-            rtl={false}
-            pauseOnFocusLoss
-            draggable
-            pauseOnHover
-            className="text-sm font-medium"  // Tailwind classes
-            toastClassName="bg-orange-300 text-gray-900 rounded-lg shadow-lg p-4"  // Custom toast styling
-            bodyClassName="flex items-center justify-center space-x-2"
-            closeButton={false}  // Use default close button or customize it
-          />
+        
+       
       </div>
       <div className="w-full sm:w-1/2 flex justify-center items-center h-full bg-orange-100">
         <div className="flex items-center justify-center text-yellow-800 p-6">
@@ -109,6 +96,21 @@ export const Signin = () => {
           </h1>
         </div>
       </div>
+      <ToastContainer
+            position="top-center"
+            autoClose={2000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            className="text-sm font-medium z-50"  // Tailwind classes
+            toastClassName="bg-orange-300 text-gray-900 rounded-lg shadow-lg p-4"  // Custom toast styling
+            bodyClassName="flex items-center justify-center space-x-2"
+            closeButton={false}  // Use default close button or customize it
+          />
     </div>
   );
 };

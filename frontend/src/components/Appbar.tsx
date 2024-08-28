@@ -50,9 +50,9 @@ export const Appbar = () => {
     navigate('/profile')
   }
 
-  // const handleFeedback = () =>{
-  //   navigate('/feedback')
-  // }
+  const handleBlog = () =>{
+    navigate('/myblog')
+  }
   return (
     <div className="flex justify-center items-center h-16 selection:bg-orange-300  lg:w-full sm:w-screen px-10 md:px-0">
       <div className="flex items-center justify-center border-b-2 border-yellow-900 pb-2 w-full md:mx-[10%] lg:w-[50%] ">
@@ -89,13 +89,15 @@ export const Appbar = () => {
               <span className="block text-sm uppercase ">{user?.name}</span>
               <span className="block truncate text-sm font-medium">{user?.email}</span>
             </Dropdown.Header >
-            <Dropdown.Item className="hover:bg-orange-300 hover:ring-1 p-2 hover:ring-orange-800  ease-in-out hover:shadow-2xl" onClick={handleProfile} icon={HiViewGrid}>Profile</Dropdown.Item>
+            <Dropdown.Item className="hover:bg-orange-300 hover:ring-1 p-2 mr-1 hover:ring-orange-800  ease-in-out hover:shadow-2xl" onClick={handleProfile} icon={HiViewGrid}>Profile</Dropdown.Item>
             
+            <DropdownDivider/>
+            <Dropdown.Item className="hover:bg-orange-300 hover:ring-1 p-2 hover:ring-orange-800  ease-in-out hover:shadow-2xl" onClick={handleBlog} icon={HiPencilAlt}>My Blog</Dropdown.Item>
+
             <Dropdown.Divider />
             <Dropdown.Item className="hover:bg-orange-300 hover:ring-1 p-2 hover:ring-orange-800 hover:shadow-2xl" onClick={handleSignOut} icon={HiLogout}>Sign out</Dropdown.Item>
 
-            {/* <DropdownDivider/>
-            <Dropdown.Item className="hover:bg-orange-300 hover:ring-1 p-2 hover:ring-orange-800  ease-in-out hover:shadow-2xl" onClick={handleFeedback} icon={HiPencilAlt}>Feedback</Dropdown.Item> */}
+            
         
           </div>
           </Dropdown>
