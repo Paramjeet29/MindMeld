@@ -9,7 +9,7 @@ import { CreateBlog } from "./pages/CreateBlog"
 import { Profile } from "./pages/Profile"
 import { Feedback } from "./pages/Feedback"
 import {Myblog} from "./pages/Myblog"
-import {MyblogDetails} from "./pages/MyblogDetails"
+import { MyblogDetails } from "./pages/MyblogDetails"
 
 function App() {
   return (

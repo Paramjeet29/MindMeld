@@ -145,7 +145,75 @@ blogRoutes.post('/',async(c)=>{
         c.status(404);
         c.json({message:err.message})
     }
-
-    
   })
+
  
+ blogRoutes.delete('/:id',async(c)=>{
+  const userId=c.get('userId');
+    const prisma = new PrismaClient({
+        datasourceUrl: c.env.DATABASE_URL,
+        
+    }).$extends(withAccelerate())
+    const id=c.req.param('id');
+    try{
+      const post=await prisma.post.findUnique({
+        where:{
+          id,
+          authorId:userId
+        }
+      })
+      if(!post){
+        c.status(404);
+        return c.json({msg:"no post exists"})
+      }
+      await prisma.post.delete({
+        where: {
+          id,
+        },
+      });
+  
+      c.status(200);
+      return c.json({ message: "Blog post deleted successfully" });
+    }
+    catch(err){
+      c.status(404);
+      return c.json({ message: "An error occurred while deleting the blog post" });
+    }
+ })
+
+ blogRoutes.put('/publish/:id',async(c)=>{
+  const prisma = new PrismaClient({
+    datasourceUrl: c.env.DATABASE_URL,
+    
+  }).$extends(withAccelerate())
+  const id=c.req.param('id');
+  const userId=c.get('userId');
+  try{
+    const post=await prisma.post.findUnique({
+      where:{
+        id,
+        authorId:userId
+      }
+    })
+    if(!post){
+      c.status(404);
+      return c.json({msg:"no post exists"})
+    }
+    const publish=post.published;
+    await prisma.post.update({
+      where: {
+        id,
+      },
+      data:{
+        published:!publish
+      }
+    });
+
+    c.status(200);
+    return c.json({ message: "Blog post updated successfully" });
+  }
+  catch(err){
+    c.status(404);
+    return c.json({ message: "An error occurred while updating the blog post" });
+  }
+ })
