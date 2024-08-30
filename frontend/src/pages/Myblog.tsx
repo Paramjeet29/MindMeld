@@ -34,8 +34,14 @@ export const Myblog = () => {
         });
         console.log("response", response.data);
         if (response.data) {
-          setData(response.data[0].posts || []);
+
+          const sortedBlogs = response.data[0].posts.sort(
+            (a: BlogData, b: BlogData) =>
+                new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+        );
+          setData(sortedBlogs || []);
         }
+
       } catch (err) {
         console.log(err);
       } finally {
@@ -58,7 +64,7 @@ export const Myblog = () => {
 
   const scroll = (direction: 'left' | 'right', ref: React.RefObject<HTMLDivElement>) => {
     if (ref.current) {
-      const scrollAmount = 400; 
+      const scrollAmount = 290; 
       ref.current.scrollBy({
         left: direction === 'left' ? -scrollAmount : scrollAmount,
         behavior: 'smooth'
@@ -66,40 +72,48 @@ export const Myblog = () => {
     }
   };
 
+  const handlePublishAll = () =>{
+    console.log("clicked")
+    navigate("/mypublishedblogs")
+  }
+  const handleDraftAll = () =>{
+    console.log("clicked")
+    navigate("/mydraftblogs")
+  }
+  
+
   return (
-    <div className="h-auto mt-10 selection:bg-orange-400">
-      <div className="w-full flex my-6 flex-col justify-center items-center">
+    <div className="h-auto mt-4 selection:bg-orange-400">
+      <div className="w-full flex flex-col justify-center items-center">
         {publishedPosts.length > 0 && (
-          <div className="w-full px-2 md:w-[60%] mb-6  ">
-            <div className="uppercase  md:text-2xl  font-bold  mb-1 text-center flex md:ml-10">
+          <div className="w-full px-2 md:w-[90%] mb-4  ">
+            <div className="uppercase  md:text-2xl  font-bold  mb-1 text-center flex ">
             
-              <section className="relative flex justify-center items-center">
+              <section onClick={handlePublishAll} className="relative w-full flex justify-center items-center">
                 <div
-                  className="group flex justify-center transition-all rounded-full underline p-1 hover:-translate-y-1 hover:text-orange-800 hover:cursor-pointer"
+                  className="group flex justify-center font-mono transition-all rounded-full underline p-1 hover:-translate-y-1 hover:text-orange-800 hover:cursor-pointer"
                 >
                   Published Posts
                   <span
-                    className="absolute text-slate-700 opacity-0 w-[120px] group-hover:opacity-100 group-hover:-translate-y-4 group-hover:translate-x-1 duration-700 text-xs md:text-sm "
+                    className="absolute text-slate-700 opacity-0 w-[120px] group-hover:opacity-100 group-hover:-translate-y-4  group-hover:translate-x-1 duration-700 text-xs md:text-sm "
                     >view all </span>
                 </div>
               </section>
-
-            
             </div>
             <div className="relative">
               <div ref={publishedRef} className="flex overflow-x-hidden scrollbar-hide scroll-smooth">
                 {publishedPosts.map((post) => (
-                  <div key={post.id} className="hover:cursor-pointer flex-none w-[400px] mr-0" onClick={() => handleBlogClick(post.id)}>
+                  <div key={post.id} className="hover:cursor-pointer flex-none w-[290px]  md:h-[250px] mr-0" onClick={() => handleBlogClick(post.id)}>
                     <ProfileBlogCard blog={post} />
                   </div>
                 ))}
               </div>
               {publishedPosts.length > 1 && (
                 <>
-                  <button onClick={() => scroll('left', publishedRef)} className="absolute left-0 top-1/2 transform -translate-y-1/2 md:-translate-x-10  bg-white bg-opacity-50 p-2 rounded-full">
+                  <button onClick={() => scroll('left', publishedRef)} className=" absolute left-0 top-1/2 transform -translate-y-1/2 md:-translate-x-10  bg-white bg-opacity-50 p-2 rounded-full">
                     <ChevronLeft size={24} />
                   </button>
-                  <button onClick={() => scroll('right', publishedRef)} className="absolute right-0 top-1/2 transform -translate-y-1/2 md:translate-x-10 bg-white bg-opacity-50 p-2 rounded-full">
+                  <button onClick={() => scroll('right', publishedRef)} className=" absolute right-0 top-1/2 transform -translate-y-1/2 md:translate-x-10 bg-white bg-opacity-50 p-2 rounded-full">
                     <ChevronRight size={24} />
                   </button>
                 </>
@@ -108,15 +122,15 @@ export const Myblog = () => {
           </div>
         )}
         {draftPosts.length > 0 && (
-          <div className="w-full px-2 md:w-[60%] ">
-            <div className="uppercase  md:text-2xl font-bold text-sm mb-1 text-center flex  md:ml-10">
-              <section className="relative flex justify-center items-center">
+          <div className="w-full px-2 md:w-[90%] ">
+            <div className="uppercase  md:text-2xl font-bold text-sm mb-1 text-center flex  ">
+              <section onClick={handleDraftAll} className="relative w-full flex justify-center items-center">
                 <div
-                  className="group flex justify-center transition-all rounded-full  p-1 hover:-translate-y-1 hover:text-orange-800 hover:cursor-pointer underline "
+                  className="group w-auto flex justify-center items-center transition-all font-mono  rounded-full  p-1 hover:-translate-y-1 hover:text-orange-800 hover:cursor-pointer underline "
                 >
                   Draft Posts
                   <span
-                    className="absolute text-slate-700 opacity-0 w-[120px] group-hover:opacity-100 group-hover:-translate-y-4 group-hover:translate-x-2 duration-700 text-xs md:text-sm"
+                    className="absolute text-slate-700 opacity-0 w-[120px] group-hover:opacity-100 group-hover:-translate-y-5 group-hover:translate-x-2 duration-700 text-xs md:text-sm"
                     >view all </span>
                 </div>
                 </section>
@@ -124,17 +138,17 @@ export const Myblog = () => {
             <div className="relative">
               <div ref={draftRef} className="flex overflow-x-hidden scrollbar-hide scroll-smooth">
                 {draftPosts.map((post) => (
-                  <div key={post.id} className="hover:cursor-pointer flex-none w-[400px] mr-0" onClick={() => handleBlogClick(post.id)}>
+                  <div key={post.id} className="hover:cursor-pointer flex-none  w-[290px] md:h-[250px] mr-0" onClick={() => handleBlogClick(post.id)}>
                     <ProfileBlogCard blog={post} />
                   </div>
                 ))}
               </div>
               {draftPosts.length > 1 && (
                 <>
-                  <button onClick={() => scroll('left', draftRef)} className="absolute left-0 top-1/2 transform -translate-y-1/2 md:-translate-x-10  bg-white bg-opacity-50 p-2 rounded-full">
+                  <button onClick={() => scroll('left', draftRef)} className=" absolute left-0 top-1/2 transform -translate-y-1/2 md:-translate-x-10  bg-white bg-opacity-50 p-2 rounded-full">
                     <ChevronLeft size={24} />
                   </button>
-                  <button onClick={() => scroll('right', draftRef)} className="absolute right-0 top-1/2 transform -translate-y-1/2 md:translate-x-10  bg-white bg-opacity-50 p-2 rounded-full">
+                  <button onClick={() => scroll('right', draftRef)} className=" absolute right-0 top-1/2 transform -translate-y-1/2 md:translate-x-10  bg-white bg-opacity-50 p-2 rounded-full">
                     <ChevronRight size={24} />
                   </button>
                 </>

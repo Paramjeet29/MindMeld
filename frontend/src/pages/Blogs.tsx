@@ -78,7 +78,7 @@ export const Blogs: React.FC = () => {
                         <p className="text-center text-gray-600">No blogs to show</p>
                     ) : (
                         currentBlogs.map((blog) => (
-                            <div className="cursor-pointer mb-6" key={blog.id} onClick={() => handleBlogClick(blog.id)}>
+                            <div className="cursor-pointer mb-4" key={blog.id} onClick={() => handleBlogClick(blog.id)}>
                                 <Blogcard blog={blog} />
                             </div>
                         ))

@@ -59,11 +59,11 @@ export const CreateBlog = () => {
   return (
     <div className="selection:bg-orange-300 max-h-screen max-w-full">
         <form className="mt-12 flex  items-center max-h-screen flex-col space-y-4  ">
-            <TextArea className={"flex font-mono w-1/2 space-x-16 justify-center border border-yellow-800  "} ref={titleRef} label="Title" placeholder="Enter the title" />
-            <TextArea className={"flex font-mono w-1/2 h-40  justify-center  space-x-2 border border-yellow-800"} ref={descRef} label="Description" placeholder="Enter the description"  />
+            <TextArea className={"flex font-mono w-[80%] md:w-3/4 lg:w-1/2 space-x-16 justify-center border border-yellow-800  "} ref={titleRef} label="Title" placeholder="Enter the title" />
+            <TextArea className={"flex font-mono w-[80%] md:w-3/4 lg:w-1/2 h-32 md:h-[250px]  justify-center  space-x-2 border border-yellow-800"} ref={descRef} label="Description" placeholder="Enter the description"  />
             <div className="flex flex-col md:flex-row space-x-2 md:space-x-8 justify-center items-center">
             <button type="button" onClick={(e)=>handleClick(e,true)}
-                className="relative flex items-center px-20 py-2 overflow-hidden font-medium mt-8 transition-all bg-orange-200  group"
+                className="relative flex items-center px-14 py-2 overflow-hidden font-medium mt-8 transition-all bg-orange-200  group"
                 >
                 <span
                     className="absolute top-0 right-0 inline-block w-4 h-4 transition-all duration-500 ease-in-out bg-orange-300  group-hover:-mr-4 group-hover:-mt-4"
@@ -102,7 +102,7 @@ export const CreateBlog = () => {
                     </span>
             </button>
             <button type="button" onClick={(e)=>handleClick(e,false)}
-                className="relative flex items-center px-20 py-2 overflow-hidden font-medium mt-8 transition-all bg-orange-200 rounded-md group"
+                className="relative flex items-center px-10 py-2 overflow-hidden font-medium mt-8 transition-all bg-orange-200 rounded-md group"
                 >
                 <span
                     className="absolute top-0 right-0 inline-block w-4 h-4 transition-all duration-500 ease-in-out bg-orange-300 rounded group-hover:-mr-4 group-hover:-mt-4"
@@ -140,6 +140,7 @@ export const CreateBlog = () => {
                            ):"Keep as draft" }
                     </span>
             </button>
+           
             <ToastContainer
             position="top-left"
             autoClose={2000}
@@ -150,11 +151,12 @@ export const CreateBlog = () => {
             pauseOnFocusLoss
             draggable
             pauseOnHover
-            className="text-sm font-medium"  // Tailwind classes
-            toastClassName="bg-orange-300 text-gray-900 rounded-lg shadow-lg p-4"  // Custom toast styling
+            className="text-xs md:text-sm font-medium  w-[70%] md:w-auto translate-y-12 md:translate-y-0" 
+            toastClassName="bg-orange-300 flex justify-center  items-center text-gray-900 rounded-lg shadow-lg p-0 md:p-4"  
             bodyClassName="flex items-center justify-center space-x-2"
-            closeButton={false}  // Use default close button or customize it
+            closeButton={false}  
           />
+            
             </div>
         </form>
     </div>

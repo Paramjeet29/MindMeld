@@ -19,6 +19,8 @@ model User {
   name     String?
   password String
   posts    Post[]
+  comments  Comment[]
+  likes     Like[]
 }
 
 model Post {
@@ -29,6 +31,8 @@ model Post {
   createdAt  DateTime @default(now())
   author    User     @relation(fields: [authorId], references: [id])
   authorId  String
+  comments  Comment[]
+  likes     Like[]
 }
 
 model Feedback {
@@ -38,4 +42,24 @@ model Feedback {
   content   String
   rating    Int
   createdAt  DateTime @default(now())
+}
+model Comment {
+  id        String   @id @default(uuid())
+  content   String
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
+  post      Post     @relation(fields: [postId], references: [id])
+  postId    String
+}
+
+model Like {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
+  post      Post     @relation(fields: [postId], references: [id])
+  postId    String
+
+  @@unique([userId, postId])
 }

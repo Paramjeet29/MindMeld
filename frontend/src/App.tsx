@@ -10,6 +10,8 @@ import { Profile } from "./pages/Profile"
 import { Feedback } from "./pages/Feedback"
 import {Myblog} from "./pages/Myblog"
 import { MyblogDetails } from "./pages/MyblogDetails"
+import {MyPublishedBlogs} from "./pages/MyPublishedBlogs"
+import {MyDraftBlogs} from "./pages/MyDraftBlogs"
 import { ToastContainer } from 'react-toastify';
 function App() {
   return (
@@ -26,6 +28,8 @@ function App() {
         <Route path="/feedback" element={<><Appbar/><Feedback/></>}/>
         <Route path="/myblog" element={<><Appbar/><Myblog/></>}/>
         <Route path="/myblogdetails/:id" element={<><Appbar/><MyblogDetails/></>}/>
+        <Route path="/mypublishedblogs" element={<><Appbar/><MyPublishedBlogs/></>}/>
+        <Route path="/mydraftblogs" element={<><Appbar/><MyDraftBlogs/></>}/>
       </Routes>
       <ToastContainer
         position="top-center"

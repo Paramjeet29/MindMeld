@@ -35,12 +35,12 @@ export const Signin = () => {
       });
   
       if (response.status === 200) { 
-        toast.success("Login successful! Welcome back.", {
-          toastId: `login-success-${Date.now()}`,
-          autoClose: 3000,  // Close after 3 seconds
-          onClose: () => navigate('/blogs')  // Navigate after the toast closes
-        });
-        
+        // toast.success("Login successful! Welcome back.", {
+        //   toastId: `login-success-${Date.now()}`,
+        //   autoClose: 3000,  // Close after 3 seconds
+        //   onClose: () => navigate('/blogs')  // Navigate after the toast closes
+        // });
+        navigate('/blogs')
         const authToken = response.headers['authorization'];
         if (authToken) {
           localStorage.setItem('authToken', authToken);
