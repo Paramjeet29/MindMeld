@@ -10,7 +10,7 @@ import { Profile } from "./pages/Profile"
 import { Feedback } from "./pages/Feedback"
 import {Myblog} from "./pages/Myblog"
 import { MyblogDetails } from "./pages/MyblogDetails"
-
+import { ToastContainer } from 'react-toastify';
 function App() {
   return (
     <AuthProvider>
@@ -27,6 +27,20 @@ function App() {
         <Route path="/myblog" element={<><Appbar/><Myblog/></>}/>
         <Route path="/myblogdetails/:id" element={<><Appbar/><MyblogDetails/></>}/>
       </Routes>
+      <ToastContainer
+        position="top-center"
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick={true}
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        className="text-sm font-medium z-50"  // Tailwind classes
+        toastClassName="bg-orange-300 text-gray-900 rounded-lg shadow-lg p-4"  // Custom toast styling
+        bodyClassName="flex items-center justify-center space-x-2"
+        closeButton={false}  // Use default close button or customize it
+      />
     </BrowserRouter>
     </AuthProvider>
   )

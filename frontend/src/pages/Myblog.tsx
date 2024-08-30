@@ -94,7 +94,7 @@ export const Myblog = () => {
                   </div>
                 ))}
               </div>
-              {publishedPosts.length > 3 && (
+              {publishedPosts.length > 1 && (
                 <>
                   <button onClick={() => scroll('left', publishedRef)} className="absolute left-0 top-1/2 transform -translate-y-1/2 md:-translate-x-10  bg-white bg-opacity-50 p-2 rounded-full">
                     <ChevronLeft size={24} />
@@ -129,7 +129,7 @@ export const Myblog = () => {
                   </div>
                 ))}
               </div>
-              {draftPosts.length > 3 && (
+              {draftPosts.length > 1 && (
                 <>
                   <button onClick={() => scroll('left', draftRef)} className="absolute left-0 top-1/2 transform -translate-y-1/2 md:-translate-x-10  bg-white bg-opacity-50 p-2 rounded-full">
                     <ChevronLeft size={24} />

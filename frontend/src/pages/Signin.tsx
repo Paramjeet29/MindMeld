@@ -3,11 +3,11 @@ import { Heading } from "../components/Heading";
 import { Subheading } from "../components/Subheading";
 import { InputBox } from "../components/InputBox";
 import { Button } from "../components/Button";
-import { useRef, useContext, useState, useEffect } from "react";
+import { useRef, useContext, useState} from "react";
 import axios from "axios";
 import { AuthContext } from "../context/AuthContext";
 import { Typewriter } from 'react-simple-typewriter'; // Importing the Typewriter component from the package
-import { ToastContainer, toast } from 'react-toastify';
+import {  toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 // import { FeedbackModal } from "../components/FeedbackModal";
 
@@ -18,7 +18,7 @@ export const Signin = () => {
   const navigate = useNavigate();
   const { user, setUser } = useContext(AuthContext); 
   const [loading,setLoading]=useState<Boolean>(false);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  // const [isModalOpen, setIsModalOpen] = useState(false);
   const handleClick = () => {
     navigate("/signup");
   };
@@ -35,8 +35,10 @@ export const Signin = () => {
       });
   
       if (response.status === 200) { 
-        toast.success("Successfully signed in!",{
-          toastId: `login-success-${Date.now()}`
+        toast.success("Login successful! Welcome back.", {
+          toastId: `login-success-${Date.now()}`,
+          autoClose: 3000,  // Close after 3 seconds
+          onClose: () => navigate('/blogs')  // Navigate after the toast closes
         });
         
         const authToken = response.headers['authorization'];
@@ -48,10 +50,7 @@ export const Signin = () => {
           name: response.data.name,
           email: response.data.email,
           id: response.data.id,
-        });
-        setTimeout(() => {
-          navigate('/blogs');
-        }, 1000);         
+        });      
       }  
     } catch(err) {
       console.error("Error with axios", err);
@@ -96,7 +95,7 @@ export const Signin = () => {
           </h1>
         </div>
       </div>
-      <ToastContainer
+      {/* <ToastContainer
             position="top-center"
             autoClose={2000}
             hideProgressBar={false}
@@ -110,7 +109,7 @@ export const Signin = () => {
             toastClassName="bg-orange-300 text-gray-900 rounded-lg shadow-lg p-4"  // Custom toast styling
             bodyClassName="flex items-center justify-center space-x-2"
             closeButton={false}  // Use default close button or customize it
-          />
+          /> */}
     </div>
   );
 };

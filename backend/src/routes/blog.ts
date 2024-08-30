@@ -217,3 +217,42 @@ blogRoutes.post('/',async(c)=>{
     return c.json({ message: "An error occurred while updating the blog post" });
   }
  })
+
+ blogRoutes.put("/edit/:id",async(c)=>{
+  const prisma = new PrismaClient({
+    datasourceUrl: c.env.DATABASE_URL,
+    
+  }).$extends(withAccelerate())
+  const id=c.req.param('id');
+  const userId=c.get('userId');
+  const body=await c.req.json();
+  try{
+    const post=await prisma.post.findUnique({
+      where:{
+        id,
+        authorId:userId
+      }
+    })
+    if(!post){
+      c.status(404);
+      return c.json({msg:"no post exists"})
+    }
+    
+    await prisma.post.update({
+      where: {
+        id,
+      },
+      data:{
+        title:body.title,
+        content:body.content
+      }
+    });
+
+    c.status(200);
+    return c.json({ message: "Blog post updated successfully" });
+  }
+  catch(err){
+    c.status(404);
+    return c.json({ message: "An error occurred while updating the blog post" });
+  }
+ })
