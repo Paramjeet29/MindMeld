@@ -4,6 +4,7 @@ import { withAccelerate } from '@prisma/extension-accelerate'
 import { sign,verify} from 'hono/jwt'
 import {createPostInput,updatePostInput} from '@paramjeet29/common'
 import { cors } from "hono/cors";
+import { connect } from "cloudflare:sockets";
 export const blogRoutes= new Hono<{
     Bindings:{
         DATABASE_URL:string,
@@ -254,5 +255,89 @@ blogRoutes.post('/',async(c)=>{
   catch(err){
     c.status(404);
     return c.json({ message: "An error occurred while updating the blog post" });
+  }
+ })
+
+
+ blogRoutes.post("/like",async(c)=>{
+  const prisma = new PrismaClient({
+    datasourceUrl: c.env.DATABASE_URL,
+    
+  }).$extends(withAccelerate())
+  const userId=c.get('userId');
+  const {postId}= await c.req.json();
+
+  try{
+    const response= await prisma.like.create ({
+      data:{
+        user:{connect:{id:userId}},
+        post:{connect:{id:postId}}
+      }
+    })
+    c.status(200);
+    return c.json(response);
+
+  }
+  catch(err){
+    c.status(500);
+    return c.json({ message: "An error occurred while liking the blog post" });
+  }
+ })
+
+ blogRoutes.delete("/like/:postId",async(c)=>{
+  const prisma = new PrismaClient({
+    datasourceUrl: c.env.DATABASE_URL,
+    
+  }).$extends(withAccelerate())
+  const userId=c.get('userId');
+  const postId= c.req.param('postId');
+
+  try{
+    const response= await prisma.like.delete ({
+      where:{
+        userId_postId:{
+          userId:userId,
+          postId:postId
+        }
+      }
+    })
+    c.status(200);
+    return c.json(response);
+
+  }
+  catch(err){
+    c.status(500);
+    return c.json({ message: "An error occurred while Disliking the blog post" });
+  }
+ })
+
+ blogRoutes.get("/like/:postId",async(c)=>{
+  const prisma = new PrismaClient({
+    datasourceUrl: c.env.DATABASE_URL,
+    
+  }).$extends(withAccelerate())
+  const postId=c.req.param('postId')
+
+  try{
+    const response= await prisma.like.findMany ({
+      where:{
+        postId:postId
+      },
+      include:{
+        user:{
+          select:{
+            name:true,
+            id:true
+          }
+        }
+      }
+    })
+    c.status(200);
+    return c.json(response);
+
+  }
+  catch(err){
+    c.status(500);
+    return c.json({ message: "An error occurred while fetch the likes " });
   }
  })
