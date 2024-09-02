@@ -5,6 +5,7 @@
     "deploy": "wrangler deploy --minify src/index.ts"
   },
   "dependencies": {
+    "@google/generative-ai": "^0.17.1",
     "@paramjeet29/common": "^1.0.2",
     "@prisma/client": "^5.18.0",
     "@prisma/extension-accelerate": "^1.1.0",

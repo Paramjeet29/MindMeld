@@ -4,11 +4,12 @@ import { withAccelerate } from '@prisma/extension-accelerate'
 import { sign,verify} from 'hono/jwt'
 import {createPostInput,updatePostInput} from '@paramjeet29/common'
 import { cors } from "hono/cors";
-import { connect } from "cloudflare:sockets";
+import { GoogleGenerativeAI } from '@google/generative-ai'
 export const blogRoutes= new Hono<{
     Bindings:{
         DATABASE_URL:string,
         JWT_SECRET:string
+        GEMINI_API_KEY:string
       }
       Variables: {
         userId:string
@@ -341,3 +342,107 @@ blogRoutes.post('/',async(c)=>{
     return c.json({ message: "An error occurred while fetch the likes " });
   }
  })
+
+//  blogRoutes.post('/generate', async (c) => {
+//   const prisma = new PrismaClient({
+//     datasourceUrl: c.env.DATABASE_URL,
+//   }).$extends(withAccelerate());
+
+//   const userId = c.get('userId');
+//   const { prompt } = await c.req.json();
+
+//   if (!prompt) {
+//     c.status(400);
+//     return c.json({ error: "Prompt is required" });
+//   }
+
+//   const genAI = new GoogleGenerativeAI(c.env.GEMINI_API_KEY);
+//   const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
+
+//   try {
+//     // Generate title
+//     const titlePrompt = `Generate a catchy title for a blog post about: ${prompt}`;
+//     const titleResult = await model.generateContent(titlePrompt);
+//     const generatedTitle = titleResult.response.text().trim();
+
+//     // Generate content
+//     const contentPrompt = `Write a blog post about: ${prompt}\n\nTitle: ${generatedTitle}\n\nContent:`;
+//     const contentResult = await model.generateContent(contentPrompt);
+//     const generatedContent = contentResult.response.text().trim();
+
+//     // Save as draft post
+    
+//     const post = await prisma.post.create({
+//       data: {
+//         title: generatedTitle,
+//         content: generatedContent,
+//         published: false, // Set as draft
+//         authorId: userId,
+//       }
+//     });
+
+//     return c.json({
+//       message: "Content generated and saved as draft",
+//       postId: post.id,
+//       title: generatedTitle,
+//       content: generatedContent
+//     });
+//   } catch (error) {
+//     console.error('Error generating content:', error);
+//     c.status(500);
+//     return c.json({ error: "Failed to generate content" });
+//   }
+// });
+blogRoutes.post("/generate", async (c) => {
+  
+  try {
+    const prisma = new PrismaClient({
+      datasourceUrl: c.env.DATABASE_URL,
+    }).$extends(withAccelerate());
+
+    const userId = c.get('userId');
+    const { prompt } = await c.req.json();
+
+    if (!prompt) {
+      c.status(400);
+      return c.json({ error: "Prompt is required" });
+    }
+
+    const genAI = new GoogleGenerativeAI(c.env.GEMINI_API_KEY);
+    const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
+
+    const result = await model.generateContent(`Create a detailed outline for a blog post about ${prompt}`);
+    const generatedText = result.response.text();
+    console.log("Generated text:", generatedText.substring(0, 100) + "...");
+
+    const lines = generatedText.split('\n');
+    const generatedTitle = lines[0].replace('## ', '');
+    const generatedContent = lines.slice(1).join('\n');
+    console.log("Extracted title:", generatedTitle);
+
+    console.log("Creating post in database");
+    const post = await prisma.post.create({
+      data: {
+        title: generatedTitle,
+        content: generatedContent,
+        published:false,
+        authorId: userId
+      }
+    });
+    console.log("Created post:", post);
+
+    return c.json({
+      message: "AI-generated post created successfully",
+      postId: post.id,
+      title: generatedTitle,
+      content: generatedContent
+    });
+  } catch (error) {
+    console.error('Error in /generate route:', error);
+    c.status(500);
+    return c.json({
+      error: "Failed to generate content",
+      details: error instanceof Error ? error.message : String(error)
+    });
+  }
+});

@@ -27,29 +27,53 @@ export const Blogs: React.FC = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        const fetchDetails = async () => {
-            const token = localStorage.getItem('authToken');
-            try {
-                const response = await axios.get("https://backend.paramjeetxapp.workers.dev/api/v1/blog/bulk", {
-                    headers: {
-                        'Authorization': `${token}`
-                    }
-                });
-                const sortedBlogs = response.data.sort(
-                    (a: BlogInterface, b: BlogInterface) =>
-                        new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-                );
-                setBlogs(sortedBlogs);
-            } catch (error) {
-                setError(blogs.length === 0 ? "No blog exists" : "Failed to load blogs.");
-                console.error("Error fetching blog details:", error);
-            } finally {
-                setLoading(false);
-            }
+        const fetchData = async () => {
+          const token = localStorage.getItem('authToken');
+          try {
+            const response = await axios.get("https://backend.paramjeetxapp.workers.dev/api/v1/blog/bulk", {
+              headers: {
+                'Authorization': `${token}`
+              }
+            });
+            const sortedBlogs = response.data.sort(
+              (a: BlogInterface, b: BlogInterface) =>
+                new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+            );
+      
+            // Fetch likes for each blog post
+            const blogsWithLikes = await Promise.all(
+              sortedBlogs.map(async (blog: BlogInterface) => {
+                const likes = await fetchLikesForBlog(blog.id);
+                return { ...blog, likes: likes?.length || 0 };
+              })
+            );
+      
+            setBlogs(blogsWithLikes);
+          } catch (error) {
+            setError(blogs.length === 0 ? "No blog exists" : "Failed to load blogs.");
+            console.error("Error fetching blog details:", error);
+          } finally {
+            setLoading(false);
+          }
         };
+      
+        fetchData();
+      }, []);
 
-        fetchDetails();
-    }, []);
+      const fetchLikesForBlog = async (blogId: string) => {
+        try {
+          const token = localStorage.getItem('authToken');
+          const response = await axios.get(`https://backend.paramjeetxapp.workers.dev/api/v1/blog/like/${blogId}`, {
+            headers: {
+              'Authorization': `${token}`
+            }
+          });
+          return response.data.length;
+        } catch (error) {
+          console.error(`Error fetching likes for blog ${blogId}:`, error);
+          return null;
+        }
+      };
 
     const handlePagination = (pageNumber: number) => {
         setCurrentPage(pageNumber);
@@ -78,8 +102,8 @@ export const Blogs: React.FC = () => {
                         <p className="text-center text-gray-600">No blogs to show</p>
                     ) : (
                         currentBlogs.map((blog) => (
-                            <div className="cursor-pointer mb-4" key={blog.id} onClick={() => handleBlogClick(blog.id)}>
-                                <Blogcard blog={blog} />
+                            <div className="cursor-pointer mb-4" key={blog.id} >
+                                <Blogcard  blog={blog} blogClick={handleBlogClick} fetchLikes={fetchLikesForBlog} />
                             </div>
                         ))
                     )}
