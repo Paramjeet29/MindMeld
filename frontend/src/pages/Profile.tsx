@@ -3,8 +3,8 @@ import { AuthContext } from "../context/AuthContext";
 import axios from "axios";
 import { InputBox } from "../components/InputBox";
 import { Button } from "../components/Button";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+// import { ToastContainer, toast } from 'react-toastify';
+// import 'react-toastify/dist/ReactToastify.css';
 
 
 export const Profile = () => {
@@ -37,17 +37,17 @@ export const Profile = () => {
                 });
             console.log("response", response.data);
             if(response.status===200){
-              toast.success("Successfully updated!",{
-                toastId: `login-success-${Date.now()}`
-              });
+              // toast.success("Successfully updated!",{
+              //   toastId: `login-success-${Date.now()}`
+              // });
             }
             
         }
         catch(err){
           console.log(err);
-          toast.error("Please try again!",{
-            toastId: `login-success-${Date.now()}`
-          });
+          // toast.error("Please try again!",{
+          //   toastId: `login-success-${Date.now()}`
+          // });
           
         }
         finally{
@@ -71,7 +71,7 @@ export const Profile = () => {
         <Button onSubmit={handleSubmit} loading={loading} />
         </div>
         </div>
-        <ToastContainer
+        {/* <ToastContainer
             position="top-center"
             autoClose={2000}
             hideProgressBar={false}
@@ -85,7 +85,7 @@ export const Profile = () => {
             toastClassName="bg-orange-300 text-gray-900 rounded-lg shadow-lg p-4"  // Custom toast styling
             bodyClassName="flex items-center justify-center space-x-2"
             closeButton={false}  // Use default close button or customize it
-          />
+          /> */}
       
      </div>
   );

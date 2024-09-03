@@ -1,8 +1,8 @@
 import { useRef, useState } from "react"
 import { TextArea } from "../components/TextArea"
 import axios from "axios"
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+// import { ToastContainer, toast } from 'react-toastify';
+// import 'react-toastify/dist/ReactToastify.css';
 export const CreateBlog = () => {
     const titleRef=useRef<HTMLTextAreaElement>(null)
     const descRef=useRef<HTMLTextAreaElement>(null)
@@ -16,9 +16,9 @@ export const CreateBlog = () => {
 
         // Validate that the title and description are not just whitespace
         if (!title || !desc || !/\S/.test(title) || !/\S/.test(desc)) {
-            toast.error("Title and description cannot be blank or just whitespace", {
-                toastId: `validation-error-${Date.now()}`,
-            });
+            // toast.error("Title and description cannot be blank or just whitespace", {
+            //     toastId: `validation-error-${Date.now()}`,
+            // });
             return;
         }
         const token =localStorage.getItem('authToken')
@@ -36,12 +36,12 @@ export const CreateBlog = () => {
                 }
             })
             if(response.status===200){
-                toast.success(
-                    publish ? "Successfully published blog!" : "Saved as draft!",
-                    {
-                      toastId: `blog-success-${Date.now()}`,
-                    }
-                  );
+                // toast.success(
+                //     publish ? "Successfully published blog!" : "Saved as draft!",
+                //     {
+                //       toastId: `blog-success-${Date.now()}`,
+                //     }
+                //   );
                 if (titleRef.current) titleRef.current.value = '';
                 if (descRef.current) descRef.current.value = '';
                 
@@ -141,7 +141,7 @@ export const CreateBlog = () => {
                     </span>
             </button>
            
-            <ToastContainer
+            {/* <ToastContainer
             position="top-left"
             autoClose={2000}
             hideProgressBar={false}
@@ -155,7 +155,7 @@ export const CreateBlog = () => {
             toastClassName="bg-orange-300 flex justify-center  items-center text-gray-900 rounded-lg shadow-lg p-0 md:p-4"  
             bodyClassName="flex items-center justify-center space-x-2"
             closeButton={false}  
-          />
+          /> */}
             
             </div>
         </form>

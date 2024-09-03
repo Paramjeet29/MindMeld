@@ -2,8 +2,8 @@
 import  { useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+// import { ToastContainer, toast } from 'react-toastify';
+// import 'react-toastify/dist/ReactToastify.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUpload } from '@fortawesome/free-solid-svg-icons';
 import Loader from '../components/Loader';
@@ -51,15 +51,15 @@ export const MyblogDetails = () => {
     const title=titleRef.current?.value;
     const content=contentRef.current?.value;
     if (!title || !content || !/\S/.test(title) || !/\S/.test(content)) {
-      toast.error("Title and description cannot be blank or just whitespace", {
-          toastId: `validation-error-${Date.now()}`,
-      });
+      // toast.error("Title and description cannot be blank or just whitespace", {
+      //     toastId: `validation-error-${Date.now()}`,
+      // });
     
     }
     if(title===blogDetails.title && content===blogDetails.content){
-      toast.error("Title and description cannot be same as previous", {
-        toastId: `validation-error-${Date.now()}`,
-    });
+    //   toast.error("Title and description cannot be same as previous", {
+    //     toastId: `validation-error-${Date.now()}`,
+    // });
     return;
     }
       
@@ -79,9 +79,9 @@ export const MyblogDetails = () => {
       }
     } catch (err) {
       console.log(err);
-      toast.error("Please try again!", {
-        toastId: `login-error-${Date.now()}`
-      });
+      // toast.error("Please try again!", {
+      //   toastId: `login-error-${Date.now()}`
+      // });
     } finally {
       setLoading(false);
     }
@@ -99,9 +99,9 @@ export const MyblogDetails = () => {
       }
     } catch (err) {
       console.log(err);
-      toast.error("Please try again!", {
-        toastId: `login-error-${Date.now()}`
-      });
+      // toast.error("Please try again!", {
+      //   toastId: `login-error-${Date.now()}`
+      // });
     } finally {
       setLoading(false);
     }
@@ -115,14 +115,14 @@ export const MyblogDetails = () => {
         headers: { 'Authorization': `${token}` }
       });
       if (response.status === 200) {
-        toast.success("Successfully Deleted post!");
+        // toast.success("Successfully Deleted post!");
         navigate('/myblog');
       }
     } catch (err) {
       console.log(err);
-      toast.error("Please try again!", {
-        toastId: `delete-error-${Date.now()}`
-      });
+      // toast.error("Please try again!", {
+      //   toastId: `delete-error-${Date.now()}`
+      // });
     } finally {
       setLoading(false);
     }
@@ -131,7 +131,7 @@ export const MyblogDetails = () => {
   if (loading) return <Loader />;
 
   return (
-    <div className="flex flex-col w-full md:w-3/4 lg:w-1/2 mx-auto mt-3 px-4 overflow-x-hidden selection:bg-orange-400">
+    <div className="flex flex-col w-full mt-3 px-12 overflow-x-hidden selection:bg-orange-400">
       <div className="w-full flex flex-col sm:flex-row justify-between items-center mb-4">
         <button
           onClick={handleBackClick}
@@ -228,13 +228,13 @@ export const MyblogDetails = () => {
         ></textarea>
         <textarea 
         ref={contentRef}
-          className="w-full h-[370px] break-words whitespace-pre-wrap focus:ring-orange-400 focus:border-orange-400 bg-orange-100 border-2 border-orange-900 rounded-md p-2"
+          className=" scrollbar-track-rounded-full scrollbar scrollbar-thumb-orange-300 scrollbar-thumb-rounded-3xl scrollbar-track-orange-200  w-full h-[370px] break-words whitespace-pre-wrap focus:ring-orange-400 focus:border-orange-400 bg-orange-100 border-2 border-orange-900 rounded-md p-2"
           defaultValue={blogDetails.content}
           
         />
       </div>
 
-      <ToastContainer
+      {/* <ToastContainer
         position="top-center"
         autoClose={2000}
         hideProgressBar={false}
@@ -248,7 +248,7 @@ export const MyblogDetails = () => {
         toastClassName="bg-orange-300 text-gray-900 rounded-lg shadow-lg p-4"
         bodyClassName="flex items-center justify-center space-x-2"
         closeButton={false}
-      />
+      /> */}
     </div>
   );
 };

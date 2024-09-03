@@ -53,18 +53,18 @@ export const Appbar = () => {
     navigate('/feedback')
   }
   return (
-    <div className="flex justify-center items-center h-16 selection:bg-orange-300  lg:w-full sm:w-screen px-10 md:px-0">
-      <div className="flex items-center justify-center border-b-2 border-yellow-900 pb-2 w-full md:mx-[10%] lg:w-[50%] ">
+    <div className="flex justify-center items-center h-16 selection:bg-orange-300  lg:w-full sm:w-screen">
+      <div className="flex items-center justify-center border-b-2 border-yellow-900 pb-2 w-full px-4  ">
         <div className="font-bold md:text-xl sm:text-sm w-full font-serif "><button className="hover:text-yellow-900" onClick={handleClickBar}>MindMeld</button></div>
-        <div className="flex items-center justify-end w-full space-x-4 ml-auto font-semibold">
+        <div className="flex items-center justify-end w-full space-x-4 ml-auto font-semibold pr-4">
           <div className="">
             <button
              onMouseEnter={handleIconMouseEnterFeedback} 
              onMouseLeave={handleIconMouseLeaveFeedback}
              onClick={handleBlog}
-             className="hover:text-yellow-900 font-serif font-semibold flex items-center text-[#1a0600]">
+             className="hover:text-yellow-900 font-serif font-semibold flex items-center  space-x-1 text-[#1a0600]">
             <FontAwesomeIcon icon={faComments} style={{ color: iconColorFeedback }} />
-            <span className="hidden sm:block">My Blogs</span>
+            <span className="hidden sm:block ">My Blogs</span>
             </button>
           </div>
           <div>

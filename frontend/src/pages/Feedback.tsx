@@ -2,8 +2,8 @@ import { useContext, useRef, useState } from "react"
 import { Button } from "../components/Button"
 import { AuthContext } from "../context/AuthContext"
 import axios from "axios"
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+// import { ToastContainer, toast } from 'react-toastify';
+// import 'react-toastify/dist/ReactToastify.css';
 export const Feedback = () =>{
   const {user}=useContext(AuthContext);
   const nameRef=useRef<HTMLInputElement>(null)
@@ -20,9 +20,9 @@ export const Feedback = () =>{
     const ratingNumber = rating;
     
     if (!name || !email || !feedback) {
-      toast.error("Please add all the details", {
-        toastId: `login-success-${Date.now()}`
-      });
+      // toast.error("Please add all the details", {
+      //   toastId: `login-success-${Date.now()}`
+      // });
       return;
     }
     setLoading(true);
@@ -36,23 +36,23 @@ export const Feedback = () =>{
       
       console.log(response);
       if(response.status===200){
-        toast.success("Feedback added successfully!",{
-          toastId: `login-success-${Date.now()}`
-        });
+        // toast.success("Feedback added successfully!",{
+        //   toastId: `login-success-${Date.now()}`
+        // });
       }
     }
     catch(err){
       console.log(err);
-      toast.error("Can't add feedback, please try again",{
-        toastId: `login-success-${Date.now()}`
-      }); 
+      // toast.error("Can't add feedback, please try again",{
+      //   toastId: `login-success-${Date.now()}`
+      // }); 
     }
     finally {
       setLoading(false);
     }
   }
   return (
-    <div className="flex flex-col space-y-4 justify-center items-center mt-10">
+    <div className="flex flex-col space-y-4 justify-center items-center mt-10 selection:bg-orange-300">
       <div className='w-full px-12 md:px-0 md:w-[45%] flex flex-col  '  >
         <label className="block font-semibold text-lg ">Enter your Name</label>
         <input required className="focus:outline-none  border border-yellow-900 w-full h-10 focus:ring-1 focus:ring-orange-900 font-mono py-1 px-2 bg-orange-100 text-yellow-900 placeholder-yellow-900  " ref={nameRef} type='text' placeholder="Your name" defaultValue={user?.name}></input>
@@ -64,7 +64,7 @@ export const Feedback = () =>{
 
       <div className='flex w-full px-12 md:px-0 md:w-[45%]  flex-col  '  >
         <label className="block font-semibold  justify-center items-center text-lg">Enter your Feedback</label>
-        <textarea  className=" focus:outline-none  border border-yellow-900 w-full focus:ring-1 focus:ring-orange-900 font-mono py-1 px-2 bg-orange-100 text-yellow-900 placeholder-yellow-900" ref={feedbackRef} placeholder="Feedback" ></textarea>
+        <textarea  className="scrollbar-track-rounded-full scrollbar scrollbar-thumb-orange-300 scrollbar-thumb-rounded-3xl scrollbar-track-orange-200 h-28 md:h-32   focus:outline-none  border border-yellow-900 w-full focus:ring-1 focus:ring-orange-900 font-mono py-1 px-2 bg-orange-100 text-yellow-900 placeholder-yellow-900" ref={feedbackRef} placeholder="Feedback" ></textarea>
       </div>
       <div className="flex flex-row-reverse">
       {[5, 4, 3, 2, 1].map((star) => (
@@ -92,7 +92,7 @@ export const Feedback = () =>{
       <div className="w-2/3 md:w-1/3 flex justify-center items-center">
         <Button onSubmit={handleSubmit} loading={loading} />
       </div>
-      <ToastContainer
+      {/* <ToastContainer
             position="top-center"
             autoClose={2000}
             hideProgressBar={false}
@@ -106,7 +106,7 @@ export const Feedback = () =>{
             toastClassName="bg-orange-300 text-gray-900 rounded-lg shadow-lg p-4"  // Custom toast styling
             bodyClassName="flex items-center justify-center space-x-2"
             closeButton={false}  // Use default close button or customize it
-          />
+          /> */}
     </div>
   )
 }

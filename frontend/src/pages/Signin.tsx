@@ -35,11 +35,7 @@ export const Signin = () => {
       });
   
       if (response.status === 200) { 
-        // toast.success("Login successful! Welcome back.", {
-        //   toastId: `login-success-${Date.now()}`,
-        //   autoClose: 3000,  // Close after 3 seconds
-        //   onClose: () => navigate('/blogs')  // Navigate after the toast closes
-        // });
+        toast.success("Login successful! Welcome back.");
         navigate('/blogs')
         const authToken = response.headers['authorization'];
         if (authToken) {
@@ -54,17 +50,11 @@ export const Signin = () => {
       }  
     } catch(err) {
       console.error("Error with axios", err);
-      toast.error("Signup failed. Please try again.",{
-        toastId: `login-success-${Date.now()}`
-      });
+      toast.error("Sign In failed. Please try again.");
     } finally {
       setLoading(false);
     }
   };
-  
-  // useEffect(()=>{
-  //   setIsModalOpen(true);
-  // },[])
 
   return (
   
@@ -95,6 +85,7 @@ export const Signin = () => {
           </h1>
         </div>
       </div>
+      
       {/* <ToastContainer
             position="top-center"
             autoClose={2000}

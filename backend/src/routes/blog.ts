@@ -151,12 +151,12 @@ blogRoutes.post('/',async(c)=>{
 
  
  blogRoutes.delete('/:id',async(c)=>{
-  const userId=c.get('userId');
     const prisma = new PrismaClient({
         datasourceUrl: c.env.DATABASE_URL,
         
     }).$extends(withAccelerate())
     const id=c.req.param('id');
+    const userId=c.get('userId');
     try{
       const post=await prisma.post.findUnique({
         where:{
@@ -178,7 +178,7 @@ blogRoutes.post('/',async(c)=>{
       return c.json({ message: "Blog post deleted successfully" });
     }
     catch(err){
-      c.status(404);
+      c.status(500);
       return c.json({ message: "An error occurred while deleting the blog post" });
     }
  })
@@ -394,12 +394,10 @@ blogRoutes.post('/',async(c)=>{
 //   }
 // });
 blogRoutes.post("/generate", async (c) => {
-  
+  const prisma = new PrismaClient({
+    datasourceUrl: c.env.DATABASE_URL,
+  }).$extends(withAccelerate());
   try {
-    const prisma = new PrismaClient({
-      datasourceUrl: c.env.DATABASE_URL,
-    }).$extends(withAccelerate());
-
     const userId = c.get('userId');
     const { prompt } = await c.req.json();
 
@@ -411,7 +409,7 @@ blogRoutes.post("/generate", async (c) => {
     const genAI = new GoogleGenerativeAI(c.env.GEMINI_API_KEY);
     const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
 
-    const result = await model.generateContent(`Create a detailed outline for a blog post about ${prompt}`);
+    const result = await model.generateContent(`Create a detailed blog post about ${prompt}`);
     const generatedText = result.response.text();
     console.log("Generated text:", generatedText.substring(0, 100) + "...");
 

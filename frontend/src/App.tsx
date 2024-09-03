@@ -5,6 +5,7 @@ import {Blog} from './pages/Blog'
 import { Blogs } from "./pages/Blogs"
 import { AuthProvider } from "./context/AuthContext"
 import { Appbar } from "./components/Appbar"
+import {CreateBlogNavbar} from "./components/CreateBlogNavbar"
 import { CreateBlog } from "./pages/CreateBlog"
 import { Profile } from "./pages/Profile"
 import { Feedback } from "./pages/Feedback"
@@ -13,6 +14,7 @@ import { MyblogDetails } from "./pages/MyblogDetails"
 import {MyPublishedBlogs} from "./pages/MyPublishedBlogs"
 import {MyDraftBlogs} from "./pages/MyDraftBlogs"
 import { ToastContainer } from 'react-toastify';
+import { GenerateAiBlog } from "./pages/GenerateAiBlog"
 function App() {
   return (
     <AuthProvider>
@@ -23,16 +25,17 @@ function App() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/blog/:id" element={<><Appbar/> <Blog/></>} />
         <Route path="/blogs" element={<> <Appbar/><Blogs /></>} />
-        <Route path="/createblog" element={<> <Appbar/><CreateBlog /></>}/>
+        <Route path="/createblog" element={<> <CreateBlogNavbar/><CreateBlog /></>}/>
         <Route path="/profile" element={<> <Appbar/><Profile /></>}/>
         <Route path="/feedback" element={<><Appbar/><Feedback/></>}/>
         <Route path="/myblog" element={<><Appbar/><Myblog/></>}/>
         <Route path="/myblogdetails/:id" element={<><Appbar/><MyblogDetails/></>}/>
         <Route path="/mypublishedblogs" element={<><Appbar/><MyPublishedBlogs/></>}/>
         <Route path="/mydraftblogs" element={<><Appbar/><MyDraftBlogs/></>}/>
+        <Route path="/generate" element={<><Appbar/><GenerateAiBlog/></>}/>
       </Routes>
       <ToastContainer
-        position="top-center"
+        position="bottom-center"
         hideProgressBar={false}
         newestOnTop={false}
         closeOnClick={true}
@@ -41,9 +44,9 @@ function App() {
         draggable
         pauseOnHover
         className="text-sm font-medium z-50"  // Tailwind classes
-        toastClassName="bg-orange-300 text-gray-900 rounded-lg shadow-lg p-4"  // Custom toast styling
-        bodyClassName="flex items-center justify-center space-x-2"
-        closeButton={false}  // Use default close button or customize it
+        toastClassName="rounded-lg shadow-lg "  // Custom toast styling
+        bodyClassName="flex items-center justify-center space-x-2 "
+        closeButton={false} 
       />
     </BrowserRouter>
     </AuthProvider>

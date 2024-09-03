@@ -7,8 +7,8 @@ import { useContext, useRef, useState } from "react";
 import axios from "axios";
 import { Typewriter } from "react-simple-typewriter";
 import { AuthContext } from "../context/AuthContext";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { toast } from 'react-toastify';
+// import 'react-toastify/dist/ReactToastify.css';
 export const Signup= () =>{
   const usernameRef=useRef<HTMLInputElement>(null);
   const emailRef=useRef<HTMLInputElement>(null);
@@ -33,9 +33,7 @@ export const Signup= () =>{
       })
       console.log("response data"+response.data)
       if (response.status === 200) { 
-        toast.success("Successfully signed in!",{
-          toastId: `login-success-${Date.now()}`
-        });
+        // toast.success("Successfully signed in!");
         const authToken = response.headers['authorization'];
         if (authToken) {
           localStorage.setItem('authToken', authToken);
@@ -53,9 +51,7 @@ export const Signup= () =>{
     }
     catch(err){
       console.log(err);
-      toast.error("Signup failed. Please try again.",{
-        toastId: `login-success-${Date.now()}`
-      });
+      toast.error("Signup failed. Please try again.");
     }
     finally{
       setLoading(false);
@@ -86,7 +82,7 @@ export const Signup= () =>{
           </h1>
         </div>
       </div>
-      <ToastContainer
+      {/* <ToastContainer
             position="top-center"
             autoClose={2000}
             hideProgressBar={false}
@@ -100,7 +96,7 @@ export const Signup= () =>{
             toastClassName="bg-orange-300 text-gray-900 rounded-lg shadow-lg p-4"  // Custom toast styling
             bodyClassName="flex items-center justify-center space-x-2"
             closeButton={false}  // Use default close button or customize it
-          />
+          /> */}
     </div>
   )
 }
