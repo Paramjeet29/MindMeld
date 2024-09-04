@@ -33,7 +33,7 @@ export const Signup= () =>{
       })
       console.log("response data"+response.data)
       if (response.status === 200) { 
-        // toast.success("Successfully signed in!");
+        toast.success("Successfully signed up!");
         const authToken = response.headers['authorization'];
         if (authToken) {
           localStorage.setItem('authToken', authToken);

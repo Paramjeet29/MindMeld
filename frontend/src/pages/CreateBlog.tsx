@@ -1,8 +1,8 @@
 import { useRef, useState } from "react"
 import { TextArea } from "../components/TextArea"
 import axios from "axios"
-// import { ToastContainer, toast } from 'react-toastify';
-// import 'react-toastify/dist/ReactToastify.css';
+import {  toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 export const CreateBlog = () => {
     const titleRef=useRef<HTMLTextAreaElement>(null)
     const descRef=useRef<HTMLTextAreaElement>(null)
@@ -16,9 +16,7 @@ export const CreateBlog = () => {
 
         // Validate that the title and description are not just whitespace
         if (!title || !desc || !/\S/.test(title) || !/\S/.test(desc)) {
-            // toast.error("Title and description cannot be blank or just whitespace", {
-            //     toastId: `validation-error-${Date.now()}`,
-            // });
+            toast.error("Title and description cannot be blank or just whitespace");
             return;
         }
         const token =localStorage.getItem('authToken')
@@ -36,12 +34,7 @@ export const CreateBlog = () => {
                 }
             })
             if(response.status===200){
-                // toast.success(
-                //     publish ? "Successfully published blog!" : "Saved as draft!",
-                //     {
-                //       toastId: `blog-success-${Date.now()}`,
-                //     }
-                //   );
+                toast.success(publish ? "Successfully published blog!" : "Saved as draft!");
                 if (titleRef.current) titleRef.current.value = '';
                 if (descRef.current) descRef.current.value = '';
                 
@@ -49,6 +42,7 @@ export const CreateBlog = () => {
         }
         catch(err){
             console.log("Error while creating post is: "+err)
+            toast.error("Please try againn!")
         }
         finally{
             publish?setLoadingPublish(false):setLoadingDraft(false);

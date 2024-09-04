@@ -2,8 +2,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import { useRef, useState } from "react"
 import axios from "axios"
-// import { ToastContainer, toast } from 'react-toastify';
-// import 'react-toastify/dist/ReactToastify.css';
+import {  toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
 
 export const GenerateAiBlog = () => {
@@ -22,7 +22,7 @@ export const GenerateAiBlog = () => {
         e.preventDefault();
         const prompt = promptRef.current?.value;
         if (!prompt) {
-            // toast.error("Please enter a prompt");
+            toast.error("Please enter a prompt");
             return;
         }
 
@@ -44,12 +44,12 @@ export const GenerateAiBlog = () => {
                 if (titleRef.current) titleRef.current.value = title;
                 if (descRef.current) descRef.current.value = content;
                 setPostDisplay(true);
-                // toast.success("Content generated successfully!");
+                toast.success("Content generated successfully! ");
                 navigate(`/myblogdetails/${response.data.postId}`)
             }
         } catch (err) {
             console.error("Error while generating post:", err);
-            // toast.error("Failed to generate content. Please try again.");
+            toast.error("Failed to generate content. Please try again.");
         } finally {
             setLoadingPublish(false);
         }

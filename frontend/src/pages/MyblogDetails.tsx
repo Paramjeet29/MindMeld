@@ -2,8 +2,8 @@
 import  { useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
-// import { ToastContainer, toast } from 'react-toastify';
-// import 'react-toastify/dist/ReactToastify.css';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUpload } from '@fortawesome/free-solid-svg-icons';
 import Loader from '../components/Loader';
@@ -51,15 +51,11 @@ export const MyblogDetails = () => {
     const title=titleRef.current?.value;
     const content=contentRef.current?.value;
     if (!title || !content || !/\S/.test(title) || !/\S/.test(content)) {
-      // toast.error("Title and description cannot be blank or just whitespace", {
-      //     toastId: `validation-error-${Date.now()}`,
-      // });
+      toast.error("Title and description cannot be blank or just whitespace");
     
     }
     if(title===blogDetails.title && content===blogDetails.content){
-    //   toast.error("Title and description cannot be same as previous", {
-    //     toastId: `validation-error-${Date.now()}`,
-    // });
+      toast.error("Title and description cannot be same as previous");
     return;
     }
       
@@ -74,14 +70,13 @@ export const MyblogDetails = () => {
         headers: { 'Authorization': `${token}` }
       });
       if (response.status === 200) {
+        toast.success("Your blog has been successfully updated!")
         navigate('/myblog')
       
       }
     } catch (err) {
       console.log(err);
-      // toast.error("Please try again!", {
-      //   toastId: `login-error-${Date.now()}`
-      // });
+      toast.error("Please try again!");
     } finally {
       setLoading(false);
     }
@@ -95,13 +90,12 @@ export const MyblogDetails = () => {
         headers: { 'Authorization': `${token}` }
       });
       if (response.status === 200) {
+        toast.success("Your blog has been successfully published!")
         navigate('/myblog')
       }
     } catch (err) {
       console.log(err);
-      // toast.error("Please try again!", {
-      //   toastId: `login-error-${Date.now()}`
-      // });
+      toast.error("Please try again!");
     } finally {
       setLoading(false);
     }
@@ -115,14 +109,12 @@ export const MyblogDetails = () => {
         headers: { 'Authorization': `${token}` }
       });
       if (response.status === 200) {
-        // toast.success("Successfully Deleted post!");
+        toast.success("Successfully Deleted post!");
         navigate('/myblog');
       }
     } catch (err) {
       console.log(err);
-      // toast.error("Please try again!", {
-      //   toastId: `delete-error-${Date.now()}`
-      // });
+      toast.error("Please try again!");
     } finally {
       setLoading(false);
     }
@@ -234,21 +226,7 @@ export const MyblogDetails = () => {
         />
       </div>
 
-      {/* <ToastContainer
-        position="top-center"
-        autoClose={2000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        className="text-sm font-medium z-50"
-        toastClassName="bg-orange-300 text-gray-900 rounded-lg shadow-lg p-4"
-        bodyClassName="flex items-center justify-center space-x-2"
-        closeButton={false}
-      /> */}
+      
     </div>
   );
 };

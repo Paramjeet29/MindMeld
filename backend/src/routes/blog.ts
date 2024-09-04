@@ -343,56 +343,6 @@ blogRoutes.post('/',async(c)=>{
   }
  })
 
-//  blogRoutes.post('/generate', async (c) => {
-//   const prisma = new PrismaClient({
-//     datasourceUrl: c.env.DATABASE_URL,
-//   }).$extends(withAccelerate());
-
-//   const userId = c.get('userId');
-//   const { prompt } = await c.req.json();
-
-//   if (!prompt) {
-//     c.status(400);
-//     return c.json({ error: "Prompt is required" });
-//   }
-
-//   const genAI = new GoogleGenerativeAI(c.env.GEMINI_API_KEY);
-//   const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
-
-//   try {
-//     // Generate title
-//     const titlePrompt = `Generate a catchy title for a blog post about: ${prompt}`;
-//     const titleResult = await model.generateContent(titlePrompt);
-//     const generatedTitle = titleResult.response.text().trim();
-
-//     // Generate content
-//     const contentPrompt = `Write a blog post about: ${prompt}\n\nTitle: ${generatedTitle}\n\nContent:`;
-//     const contentResult = await model.generateContent(contentPrompt);
-//     const generatedContent = contentResult.response.text().trim();
-
-//     // Save as draft post
-    
-//     const post = await prisma.post.create({
-//       data: {
-//         title: generatedTitle,
-//         content: generatedContent,
-//         published: false, // Set as draft
-//         authorId: userId,
-//       }
-//     });
-
-//     return c.json({
-//       message: "Content generated and saved as draft",
-//       postId: post.id,
-//       title: generatedTitle,
-//       content: generatedContent
-//     });
-//   } catch (error) {
-//     console.error('Error generating content:', error);
-//     c.status(500);
-//     return c.json({ error: "Failed to generate content" });
-//   }
-// });
 blogRoutes.post("/generate", async (c) => {
   const prisma = new PrismaClient({
     datasourceUrl: c.env.DATABASE_URL,

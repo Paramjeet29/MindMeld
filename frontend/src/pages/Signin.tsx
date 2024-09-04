@@ -85,22 +85,6 @@ export const Signin = () => {
           </h1>
         </div>
       </div>
-      
-      {/* <ToastContainer
-            position="top-center"
-            autoClose={2000}
-            hideProgressBar={false}
-            newestOnTop={false}
-            closeOnClick
-            rtl={false}
-            pauseOnFocusLoss
-            draggable
-            pauseOnHover
-            className="text-sm font-medium z-50"  // Tailwind classes
-            toastClassName="bg-orange-300 text-gray-900 rounded-lg shadow-lg p-4"  // Custom toast styling
-            bodyClassName="flex items-center justify-center space-x-2"
-            closeButton={false}  // Use default close button or customize it
-          /> */}
     </div>
   );
 };

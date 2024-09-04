@@ -3,8 +3,8 @@ import React, { useContext, useRef, useState, useEffect } from "react";
 import { Button } from "../components/Button";
 import { AuthContext } from "../context/AuthContext";
 import axios from "axios";
-// import { ToastContainer, toast } from 'react-toastify';
-// import 'react-toastify/dist/ReactToastify.css';
+import {  toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export const FeedbackModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ isOpen, onClose }) => {
   const { user } = useContext(AuthContext);
@@ -28,9 +28,7 @@ export const FeedbackModal: React.FC<{ isOpen: boolean; onClose: () => void }> =
     const ratingNumber = rating;
     
     if (!name || !email || !feedback) {
-      // toast.error("Please add all the details", {
-      //   toastId: `login-success-${Date.now()}`
-      // });
+      toast.error("Please add all the details");
       return;
     }
     setLoading(true);
@@ -44,16 +42,12 @@ export const FeedbackModal: React.FC<{ isOpen: boolean; onClose: () => void }> =
       
       console.log(response);
       if (response.status === 200) {
-        // toast.success("Feedback added successfully!", {
-        //   toastId: `login-success-${Date.now()}`
-        // });
-        onClose(); // Close the modal after successful submission
+        toast.success("Feedback added successfully!");
+        onClose(); 
       }
     } catch (err) {
       console.log(err);
-      // toast.error("Can't add feedback, please try again", {
-      //   toastId: `login-success-${Date.now()}`
-      // }); 
+      toast.error("Can't add feedback, please try again"); 
     } finally {
       setLoading(false);
     }
@@ -121,21 +115,7 @@ export const FeedbackModal: React.FC<{ isOpen: boolean; onClose: () => void }> =
           </div>
         </div>
       </div>
-      {/* <ToastContainer
-        position="top-center"
-        autoClose={2000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        className="text-sm font-medium"
-        toastClassName="bg-orange-300 text-gray-900 rounded-lg shadow-lg p-4"
-        bodyClassName="flex items-center justify-center space-x-2"
-        closeButton={false}
-      /> */}
+      
     </div>
   );
 };

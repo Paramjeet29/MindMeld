@@ -2,8 +2,8 @@ import { useContext, useRef, useState } from "react"
 import { Button } from "../components/Button"
 import { AuthContext } from "../context/AuthContext"
 import axios from "axios"
-// import { ToastContainer, toast } from 'react-toastify';
-// import 'react-toastify/dist/ReactToastify.css';
+import {  toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 export const Feedback = () =>{
   const {user}=useContext(AuthContext);
   const nameRef=useRef<HTMLInputElement>(null)
@@ -20,9 +20,7 @@ export const Feedback = () =>{
     const ratingNumber = rating;
     
     if (!name || !email || !feedback) {
-      // toast.error("Please add all the details", {
-      //   toastId: `login-success-${Date.now()}`
-      // });
+      toast.error("Please add all the details");
       return;
     }
     setLoading(true);
@@ -36,16 +34,12 @@ export const Feedback = () =>{
       
       console.log(response);
       if(response.status===200){
-        // toast.success("Feedback added successfully!",{
-        //   toastId: `login-success-${Date.now()}`
-        // });
+        toast.success("Feedback added successfully!");
       }
     }
     catch(err){
       console.log(err);
-      // toast.error("Can't add feedback, please try again",{
-      //   toastId: `login-success-${Date.now()}`
-      // }); 
+      toast.error("Can't add feedback, please try again"); 
     }
     finally {
       setLoading(false);
