@@ -106,7 +106,7 @@ export const Blogs: React.FC = () => {
                         </div>
                     ) : (
                         currentBlogs.map((blog) => (
-                            <div className="cursor-pointer mb-4 py-8" key={blog.id}>
+                            <div className="cursor-pointer mb-4 py-8 selection:bg-orange-300" key={blog.id}>
                                 <Blogcard blog={blog} blogClick={handleBlogClick} fetchLikes={fetchLikesForBlog} />
                             </div>
                         ))

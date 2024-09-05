@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import 'react-loading-skeleton/dist/skeleton.css'
 import axios from 'axios';
+import { AuthContext } from '../context/AuthContext';
 const timeAgo = (date: string): string => {
   const now = new Date();
   const pastDate = new Date(date);
@@ -40,15 +41,76 @@ interface BlogcardProps {
   blogClick: (blogId: string) => void;
 }
 
+// export const Blogcard: React.FC<BlogcardProps> = ({ blog, fetchLikes, blogClick }) => {
+//   const [likes, setLikes] = useState<number>(0);
+//   const [isLiked, setIsLiked] = useState<boolean>(false);
+
+//   useEffect(() => {
+//     const getLikes = async () => {
+//       const likesCount = await fetchLikes(blog.id);
+//       setLikes(likesCount);
+//       checkIfLiked(blog.id); // Check if the blog is liked by the user
+//     };
+//     getLikes();
+//   }, [blog.id, fetchLikes]);
+
+//   const checkIfLiked = async (blogId: string) => {
+//     try {
+//       const token = localStorage.getItem('authToken');
+//       const response = await axios.get(`https://backend.paramjeetxapp.workers.dev/api/v1/blog/like/${blogId}`, {
+//         headers: {
+//           'Authorization': `${token}`
+//         }
+//       });
+//       if (response.data.length > 0) {
+//         setIsLiked(true);
+//       }
+//     } catch (error) {
+//       console.error(`Error checking if blog ${blogId} is liked:`, error);
+//     }
+//   };
+
+//   const handleLikeToggle = async () => {
+//     const token = localStorage.getItem('authToken');
+//     try {
+//       if (isLiked) {
+//         await axios.delete(`https://backend.paramjeetxapp.workers.dev/api/v1/blog/like/${blog.id}`, {
+//           headers: {
+//             'Authorization': `${token}`
+//           }
+//         });
+//         setLikes(likes - 1);
+//       } else {
+//         await axios.post(`https://backend.paramjeetxapp.workers.dev/api/v1/blog/like`, 
+//         { postId: blog.id },
+//         {
+//           headers: {
+//             'Authorization': `${token}`
+//           }
+//         });
+//         setLikes(likes + 1);
+//       }
+//       setIsLiked(!isLiked);
+//     } catch (error) {
+//       console.error(`Error toggling like for blog ${blog.id}:`, error);
+//     }
+//   };
 export const Blogcard: React.FC<BlogcardProps> = ({ blog, fetchLikes, blogClick }) => {
   const [likes, setLikes] = useState<number>(0);
   const [isLiked, setIsLiked] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
+  const {user}=useContext(AuthContext)
 
   useEffect(() => {
     const getLikes = async () => {
-      const likesCount = await fetchLikes(blog.id);
-      setLikes(likesCount);
-      checkIfLiked(blog.id); // Check if the blog is liked by the user
+      try {
+        const likesCount = await fetchLikes(blog.id);
+        setLikes(likesCount);
+        await checkIfLiked(blog.id);
+      } catch (error) {
+        console.error(`Error fetching likes for blog ${blog.id}:`, error);
+        setError("Failed to fetch likes");
+      }
     };
     getLikes();
   }, [blog.id, fetchLikes]);
@@ -61,11 +123,16 @@ export const Blogcard: React.FC<BlogcardProps> = ({ blog, fetchLikes, blogClick 
           'Authorization': `${token}`
         }
       });
-      if (response.data.length > 0) {
-        setIsLiked(true);
-      }
+      const userLike = response.data.find((like: { userId: string }) => like.userId === user?.id);
+
+    if (userLike) {
+      setIsLiked(true);
+    } else {
+      setIsLiked(false);
+    }
     } catch (error) {
       console.error(`Error checking if blog ${blogId} is liked:`, error);
+      setError("Failed to check like status");
     }
   };
 
@@ -78,7 +145,7 @@ export const Blogcard: React.FC<BlogcardProps> = ({ blog, fetchLikes, blogClick 
             'Authorization': `${token}`
           }
         });
-        setLikes(likes - 1);
+        setLikes(prevLikes => prevLikes - 1);
       } else {
         await axios.post(`https://backend.paramjeetxapp.workers.dev/api/v1/blog/like`, 
         { postId: blog.id },
@@ -87,13 +154,20 @@ export const Blogcard: React.FC<BlogcardProps> = ({ blog, fetchLikes, blogClick 
             'Authorization': `${token}`
           }
         });
-        setLikes(likes + 1);
+        setLikes(prevLikes => prevLikes + 1);
       }
       setIsLiked(!isLiked);
+      setError(null);
     } catch (error) {
       console.error(`Error toggling like for blog ${blog.id}:`, error);
+      if (axios.isAxiosError(error) && error.response) {
+        setError(`Failed to ${isLiked ? 'unlike' : 'like'} post: ${error.response.data.message}`);
+      } else {
+        setError(`Failed to ${isLiked ? 'unlike' : 'like'} post`);
+      }
     }
   };
+
 
   return (
     blog.published && (
@@ -109,6 +183,8 @@ export const Blogcard: React.FC<BlogcardProps> = ({ blog, fetchLikes, blogClick 
               </p>
             </button>
           </div>
+          {error && <p className="text-red-500 text-xs absolute bottom-2 left-2">{error}</p>}
+        
           <div>
             <p className="text-xl font-bold font-serif text-yellow-950 break-words">
               {blog.title.length > 30 ? blog.title.toUpperCase().slice(0, 30) + " ....." : blog.title.toUpperCase()}

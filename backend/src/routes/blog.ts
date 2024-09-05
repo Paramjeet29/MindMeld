@@ -260,31 +260,68 @@ blogRoutes.post('/',async(c)=>{
  })
 
 
- blogRoutes.post("/like",async(c)=>{
+//  blogRoutes.post("/like",async(c)=>{
+//   const prisma = new PrismaClient({
+//     datasourceUrl: c.env.DATABASE_URL,
+    
+//   }).$extends(withAccelerate())
+//   const userId=c.get('userId');
+//   const {postId}= await c.req.json();
+
+//   try{
+//     const response= await prisma.like.create ({
+//       data:{
+//         user:{connect:{id:userId}},
+//         post:{connect:{id:postId}}
+//       }
+//     })
+//     c.status(200);
+//     return c.json(response);
+
+//   }
+//   catch(err){
+//     c.status(500);
+//     return c.json({ message: "An error occurred while liking the blog post" });
+//   }
+//  })
+blogRoutes.post("/like", async (c) => {
   const prisma = new PrismaClient({
     datasourceUrl: c.env.DATABASE_URL,
-    
   }).$extends(withAccelerate())
-  const userId=c.get('userId');
-  const {postId}= await c.req.json();
+  
+  const userId = c.get('userId');
+  const { postId } = await c.req.json();
+  
+  try {
+    if (!userId) {
+      c.status(401);
+      return c.json({ message: "User not authenticated" });
+    }
 
-  try{
-    const response= await prisma.like.create ({
-      data:{
-        user:{connect:{id:userId}},
-        post:{connect:{id:postId}}
+    const post = await prisma.post.findUnique({
+      where: { id: postId }
+    });
+
+    if (!post) {
+      c.status(404);
+      return c.json({ message: "Blog post not found" });
+    }
+
+    const response = await prisma.like.create({
+      data: {
+        user: { connect: { id: userId } },
+        post: { connect: { id: postId } }
       }
-    })
+    });
+    
     c.status(200);
     return c.json(response);
-
-  }
-  catch(err){
+  } catch (err) {
+    console.error("Error in /like route:", err);
     c.status(500);
-    return c.json({ message: "An error occurred while liking the blog post" });
+    return c.json({ message: "An error occurred while liking the blog post"});
   }
- })
-
+});
  blogRoutes.delete("/like/:postId",async(c)=>{
   const prisma = new PrismaClient({
     datasourceUrl: c.env.DATABASE_URL,
