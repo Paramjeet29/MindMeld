@@ -6,7 +6,7 @@ interface inputProps{
   defaultValue?:string
 }
 export const TextArea = forwardRef<HTMLTextAreaElement,inputProps>(
-  ({placeholder,className,defaultValue,label},ref) => {
+  ({placeholder,className,defaultValue},ref) => {
   return (
     <div className={className}  >
       {/* <label className="block font-semibold  justify-center items-center">{label}</label> */}

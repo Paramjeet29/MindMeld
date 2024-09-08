@@ -6,9 +6,7 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUpload } from '@fortawesome/free-solid-svg-icons';
-import { faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import Loader from '../components/Loader';
-import { CommentDisplay } from '../components/CommentDisplay';
 import { ProfileCommentDisplay } from '../components/ProfileCommentDisplay';
 export const MyblogDetails = () => {
   const { id } = useParams();

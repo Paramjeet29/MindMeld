@@ -1,13 +1,11 @@
 
-import React, { useContext, useRef, useState, useEffect } from "react";
+import React, {  useRef, useState, useEffect } from "react";
 import { Button } from "../components/Button";
-import { AuthContext } from "../context/AuthContext";
 import axios from "axios";
 import {  toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 export const FeedbackModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ isOpen, onClose }) => {
-  const { user } = useContext(AuthContext);
   const nameRef = useRef<HTMLInputElement>(null);
   const emailRef = useRef<HTMLInputElement>(null);
   const feedbackRef = useRef<HTMLTextAreaElement>(null);

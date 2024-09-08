@@ -40,8 +40,9 @@ export const MyPublishedBlogs =()=> {
             );
           setData(sortedBlogs || []);
         }
-      } catch (err) {
+      } catch (err:any) {
         console.log(err);
+        setError(err)
       } finally {
         setIsLoading(false);
       }

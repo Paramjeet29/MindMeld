@@ -12,11 +12,10 @@ import 'react-toastify/dist/ReactToastify.css';
 // import { FeedbackModal } from "../components/FeedbackModal";
 
 export const Signin = () => {
-  const usernameRef = useRef<HTMLInputElement>(null);
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
-  const { user, setUser } = useContext(AuthContext); 
+  const {  setUser } = useContext(AuthContext); 
   const [loading,setLoading]=useState<Boolean>(false);
   // const [isModalOpen, setIsModalOpen] = useState(false);
   const handleClick = () => {

@@ -1,4 +1,4 @@
-import { useContext,useState,useRef,useEffect } from "react";
+import { useContext,useState,useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { AuthContext } from "../context/AuthContext";
@@ -36,8 +36,9 @@ export const MyDraftBlogs =()=> {
         if (response.data) {
           setData(response.data[0].posts || []);
         }
-      } catch (err) {
+      } catch (err:any) {
         console.log(err);
+        setError(err);
       } finally {
         setIsLoading(false);
       }

@@ -2,8 +2,6 @@ import React, { useContext, useEffect, useState } from 'react';
 import 'react-loading-skeleton/dist/skeleton.css'
 import axios from 'axios';
 import { AuthContext } from '../context/AuthContext';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faComment } from '@fortawesome/free-solid-svg-icons';
 const timeAgo = (date: string): string => {
   const now = new Date();
   const pastDate = new Date(date);

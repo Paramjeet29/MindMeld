@@ -82,13 +82,13 @@ export const CreateBlog = () => {
                         (loadingPublish)?(
                             <div className="w-full py-2 gap-x-2 flex justify-center items-center">
                               <div
-                                className="w-3 bg-stone-950 animate-pulse h-3 rounded-full animate-bounce"
+                                className="w-3 bg-stone-950  h-3 rounded-full animate-bounce"
                               ></div>
                               <div
-                                className="w-3 animate-pulse h-3 bg-stone-900 rounded-full animate-bounce"
+                                className="w-3 h-3 bg-stone-900 rounded-full animate-bounce"
                               ></div>
                               <div
-                                className="w-3 h-3 animate-pulse bg-stone-800 rounded-full animate-bounce"
+                                className="w-3 h-3  bg-stone-800 rounded-full animate-bounce"
                               ></div>
                             </div>
                     
@@ -121,13 +121,13 @@ export const CreateBlog = () => {
                         (loadingDraft)?(
                             <div className="w-full py-2 gap-x-2 flex justify-center items-center">
                               <div
-                                className="w-3 bg-stone-950 animate-pulse h-3 rounded-full animate-bounce"
+                                className="w-3 bg-stone-950  h-3 rounded-full animate-bounce"
                               ></div>
                               <div
-                                className="w-3 animate-pulse h-3 bg-stone-900 rounded-full animate-bounce"
+                                className="w-3  h-3 bg-stone-900 rounded-full animate-bounce"
                               ></div>
                               <div
-                                className="w-3 h-3 animate-pulse bg-stone-800 rounded-full animate-bounce"
+                                className="w-3 h-3 bg-stone-800 rounded-full animate-bounce"
                               ></div>
                             </div>
                     
@@ -135,21 +135,7 @@ export const CreateBlog = () => {
                     </span>
             </button>
            
-            {/* <ToastContainer
-            position="top-left"
-            autoClose={2000}
-            hideProgressBar={false}
-            newestOnTop={false}
-            closeOnClick
-            rtl={false}
-            pauseOnFocusLoss
-            draggable
-            pauseOnHover
-            className="text-xs md:text-sm font-medium  w-[70%] md:w-auto translate-y-12 md:translate-y-0" 
-            toastClassName="bg-orange-300 flex justify-center  items-center text-gray-900 rounded-lg shadow-lg p-0 md:p-4"  
-            bodyClassName="flex items-center justify-center space-x-2"
-            closeButton={false}  
-          /> */}
+            
             
             </div>
         </form>

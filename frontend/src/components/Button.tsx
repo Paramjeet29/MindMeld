@@ -13,13 +13,13 @@ export const  Button:FC<buttonProp> = ({onSubmit,loading}) =>{
        { loading?(
         <div className="w-full py-2 gap-x-2 flex justify-center items-center">
           <div
-            className="w-3 bg-stone-950 animate-pulse h-3 rounded-full animate-bounce"
+            className="w-3 bg-stone-950  h-3 rounded-full animate-bounce"
           ></div>
           <div
-            className="w-3 animate-pulse h-3 bg-stone-900 rounded-full animate-bounce"
+            className="w-3  h-3 bg-stone-900 rounded-full animate-bounce"
           ></div>
           <div
-            className="w-3 h-3 animate-pulse bg-stone-800 rounded-full animate-bounce"
+            className="w-3 h-3  bg-stone-800 rounded-full animate-bounce"
           ></div>
         </div>
 

@@ -50,8 +50,8 @@ export const Blogs: React.FC = () => {
 
                 setBlogs(blogsWithLikes);
             } catch (error) {
-                
                 console.error("Error fetching blog details:", error);
+                setError("error");
             } finally {
                 setLoading(false);
             }
