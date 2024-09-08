@@ -1,4 +1,5 @@
-import React, { useContext, useState } from "react";
+
+import { useContext, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faComments } from '@fortawesome/free-solid-svg-icons';
@@ -8,13 +9,10 @@ import { HiLogout, HiViewGrid, HiPencilAlt } from "react-icons/hi";
 
 export const CreateBlogNavbar = () => {
   const { user } = useContext(AuthContext);
-  const [iconColor, setIconColor] = useState("#1a0600");
   const [iconColorFeedback, setIconColorFeedback] = useState("#1a0600");
   
   const navigate = useNavigate();
 
-  const handleIconMouseEnter = () => setIconColor("#78350f");
-  const handleIconMouseLeave = () => setIconColor("#1a0600");
   const handleIconMouseEnterFeedback = () => setIconColorFeedback("#78350f");
   const handleIconMouseLeaveFeedback = () => setIconColorFeedback("#1a0600");
   
@@ -46,8 +44,6 @@ export const CreateBlogNavbar = () => {
             <span className="hidden sm:inline">My Blogs</span>
           </button>
           <button 
-            onMouseEnter={handleIconMouseEnter}
-            onMouseLeave={handleIconMouseLeave}
             onClick={handleClick}
             className="hover:text-yellow-900 font-serif font-semibold flex items-center text-[#1a0600] whitespace-nowrap"
           >
