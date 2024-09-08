@@ -41,60 +41,6 @@ interface BlogcardProps {
   blogClick: (blogId: string) => void;
 }
 
-// export const Blogcard: React.FC<BlogcardProps> = ({ blog, fetchLikes, blogClick }) => {
-//   const [likes, setLikes] = useState<number>(0);
-//   const [isLiked, setIsLiked] = useState<boolean>(false);
-
-//   useEffect(() => {
-//     const getLikes = async () => {
-//       const likesCount = await fetchLikes(blog.id);
-//       setLikes(likesCount);
-//       checkIfLiked(blog.id); // Check if the blog is liked by the user
-//     };
-//     getLikes();
-//   }, [blog.id, fetchLikes]);
-
-//   const checkIfLiked = async (blogId: string) => {
-//     try {
-//       const token = localStorage.getItem('authToken');
-//       const response = await axios.get(`https://backend.paramjeetxapp.workers.dev/api/v1/blog/like/${blogId}`, {
-//         headers: {
-//           'Authorization': `${token}`
-//         }
-//       });
-//       if (response.data.length > 0) {
-//         setIsLiked(true);
-//       }
-//     } catch (error) {
-//       console.error(`Error checking if blog ${blogId} is liked:`, error);
-//     }
-//   };
-
-//   const handleLikeToggle = async () => {
-//     const token = localStorage.getItem('authToken');
-//     try {
-//       if (isLiked) {
-//         await axios.delete(`https://backend.paramjeetxapp.workers.dev/api/v1/blog/like/${blog.id}`, {
-//           headers: {
-//             'Authorization': `${token}`
-//           }
-//         });
-//         setLikes(likes - 1);
-//       } else {
-//         await axios.post(`https://backend.paramjeetxapp.workers.dev/api/v1/blog/like`, 
-//         { postId: blog.id },
-//         {
-//           headers: {
-//             'Authorization': `${token}`
-//           }
-//         });
-//         setLikes(likes + 1);
-//       }
-//       setIsLiked(!isLiked);
-//     } catch (error) {
-//       console.error(`Error toggling like for blog ${blog.id}:`, error);
-//     }
-//   };
 export const Blogcard: React.FC<BlogcardProps> = ({ blog, fetchLikes, blogClick }) => {
   const [likes, setLikes] = useState<number>(0);
   const [isLiked, setIsLiked] = useState<boolean>(false);

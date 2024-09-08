@@ -138,6 +138,14 @@ blogRoutes.post('/',async(c)=>{
         const blog=await prisma.post.findUnique({
             where:{
                 id
+            },
+            include:{
+              author:{
+                select:{
+                  name:true
+                }
+              }
+
             }
         })
         c.status(200)
@@ -429,5 +437,142 @@ blogRoutes.post("/generate", async (c) => {
       error: "Failed to generate content",
       details: error instanceof Error ? error.message : String(error)
     });
+  }
+});
+
+blogRoutes.post('/comments', async (c) => {
+  const prisma = new PrismaClient({
+    datasourceUrl: c.env.DATABASE_URL,
+  }).$extends(withAccelerate())
+
+  const userId = c.get('userId');
+  const { postId, content } = await c.req.json();
+
+  try {
+    const comment = await prisma.comment.create({
+      data: {
+        content,
+        userId,
+        postId
+      },
+      include: {
+        user: {
+          select: {
+            name: true
+          }
+        }
+      }
+    });
+
+    return c.json(comment);
+  } catch (err) {
+    c.status(500);
+    return c.json({ message: "An error occurred while creating the comment" });
+  }
+});
+
+// Get comments for a post
+blogRoutes.get('/comments/:postId', async (c) => {
+  const prisma = new PrismaClient({
+    datasourceUrl: c.env.DATABASE_URL,
+  }).$extends(withAccelerate())
+
+  const postId = c.req.param('postId');
+
+  try {
+    const comments = await prisma.comment.findMany({
+      where: {
+        postId
+      },
+      include: {
+        user: {
+          select: {
+            name: true
+          }
+        }
+      },
+      orderBy: {
+        createdAt: 'desc'
+      }
+    });
+
+    return c.json(comments);
+  } catch (err) {
+    c.status(500);
+    return c.json({ message: "An error occurred while fetching comments" });
+  }
+});
+
+// Update a comment
+blogRoutes.put('/comments/:id', async (c) => {
+  const prisma = new PrismaClient({
+    datasourceUrl: c.env.DATABASE_URL,
+  }).$extends(withAccelerate())
+
+  const userId = c.get('userId');
+  const commentId = c.req.param('id');
+  const { content } = await c.req.json();
+
+  try {
+    const comment = await prisma.comment.findUnique({
+      where: {
+        id: commentId,
+        userId
+      }
+    });
+
+    if (!comment) {
+      c.status(404);
+      return c.json({ message: "Comment not found or you're not authorized to update it" });
+    }
+
+    const updatedComment = await prisma.comment.update({
+      where: {
+        id: commentId
+      },
+      data: {
+        content
+      }
+    });
+
+    return c.json(updatedComment);
+  } catch (err) {
+    c.status(500);
+    return c.json({ message: "An error occurred while updating the comment" });
+  }
+});
+
+// Delete a comment
+blogRoutes.delete('/comments/:id', async (c) => {
+  const prisma = new PrismaClient({
+    datasourceUrl: c.env.DATABASE_URL,
+  }).$extends(withAccelerate())
+
+  const userId = c.get('userId');
+  const commentId = c.req.param('id');
+
+  try {
+    const comment = await prisma.comment.findUnique({
+      where: {
+        id: commentId,
+        userId
+      }
+    });
+
+    if (!comment) {
+      c.status(404);
+      return c.json({ message: "Comment not found or you're not authorized to delete it" });
+    }
+
+    await prisma.comment.delete({
+      where: {
+        id: commentId
+      }
+    });
+
+    return c.json({ message: "Comment deleted successfully" });
+  } catch (err) {
+    c.status(500);
+    return c.json({ message: "An error occurred while deleting the comment" });
   }
 });

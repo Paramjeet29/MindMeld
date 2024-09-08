@@ -11,7 +11,7 @@ export const InputBox = forwardRef<HTMLInputElement,inputProps>(
   return (
     <div className={className}  >
       <label className="block font-semibold ">{label}</label>
-      <input  required className="focus:outline-none  border border-yellow-900 w-full focus:ring-1 focus:ring-orange-900 font-mono py-1 px-2 bg-orange-100 text-yellow-900 placeholder-gray-600 font-semibold " defaultValue={defaultValue} ref={ref} type={type} placeholder={placeholder} ></input>
+      <input  required className="focus:outline-none focus:ring-orange-900 focus:border-orange-900 border border-yellow-900 w-full focus:ring-1  font-mono py-1 px-2 bg-orange-100 text-yellow-900 placeholder-gray-600 font-semibold " defaultValue={defaultValue} ref={ref} type={type} placeholder={placeholder} ></input>
     </div>
   )
 }

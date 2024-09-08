@@ -61,6 +61,20 @@ const handleBlogClick = (id: string) => {
 if (isLoading) {
     return <Loader />;
 }
+const fetchLikesForBlog = async (blogId: string) => {
+  try {
+      const token = localStorage.getItem('authToken');
+      const response = await axios.get(`https://backend.paramjeetxapp.workers.dev/api/v1/blog/like/${blogId}`, {
+          headers: {
+              'Authorization': `${token}`
+          }
+      });
+      return response.data.length;
+  } catch (error) {
+      console.error(`Error fetching likes for blog ${blogId}:`, error);
+      return 0;
+  }
+};
 
 const indexOfLastBlog = currentPage * postsPerPage;
 const indexOfFirstBlog = indexOfLastBlog - postsPerPage;
@@ -76,8 +90,8 @@ const currentBlogs = publishedPosts.slice(indexOfFirstBlog, indexOfLastBlog);
                         <p className="text-center text-gray-600">No blogs to show</p>
                     ) : (
                         currentBlogs.map((blog) => (
-                            <div className="cursor-pointer  mb-3 h-[190px]" key={blog.id} onClick={() => handleBlogClick(blog.id)}>
-                                <ProfileBlogCard blog={blog}/>
+                            <div className="cursor-pointer  mb-2 h-[250px] md:h-[230px]" key={blog.id} >
+                                <ProfileBlogCard blog={blog} blogClick={handleBlogClick}   fetchLikes={fetchLikesForBlog} />
                             </div>
                         ))
                     )}

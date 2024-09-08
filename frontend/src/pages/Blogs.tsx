@@ -50,7 +50,7 @@ export const Blogs: React.FC = () => {
 
                 setBlogs(blogsWithLikes);
             } catch (error) {
-                // setError(blogs.length === 0 ?  <img src={arrow}></img>: "Failed to load blogs.");
+                
                 console.error("Error fetching blog details:", error);
             } finally {
                 setLoading(false);
@@ -94,19 +94,18 @@ export const Blogs: React.FC = () => {
     const currentBlogs = publishedBlogs.slice(indexOfFirstBlog, indexOfLastBlog);
 
     return (
-        <div className="flex flex-col min-h-screen bg-orange-100 ">
+        <div className="flex flex-col min-h-screen bg-orange-100 pt-2 ">
             <div className="flex-grow container mx-auto px-4 ">
                 <div className="max-w-4xl mx-auto">
                     {error ? (
                         <p className="text-red-500 text-center">{error}</p>
                     ) : blogs.length === 0 ? (
-                        // <p className="text-center text-gray-600">No blogs to show</p>
                         <div className="h-screen">
                             <img className="w-full" src={arrow}></img>
                         </div>
                     ) : (
                         currentBlogs.map((blog) => (
-                            <div className="cursor-pointer mb-4 py-8 selection:bg-orange-300" key={blog.id}>
+                            <div className="cursor-pointer mb-4 py-0 selection:bg-orange-300" key={blog.id}>
                                 <Blogcard blog={blog} blogClick={handleBlogClick} fetchLikes={fetchLikesForBlog} />
                             </div>
                         ))

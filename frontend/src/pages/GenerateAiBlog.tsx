@@ -58,10 +58,10 @@ export const GenerateAiBlog = () => {
         <div className='w-full flex justify-center flex-col mt-[180px] items-center  selection:bg-orange-400'>
             <div className='shadow-lg  h-32 flex w-full  px-12 md:px-10 md:w-[47%] flex-col relative'>
                 <label className="block font-semibold justify-center items-center text-lg">Enter the Prompt</label>
-                <input className="focus:outline-none border border-yellow-900 w-full focus:ring-1 focus:ring-orange-900 font-mono py-1 px-2 bg-orange-100 text-yellow-900 placeholder-yellow-900" placeholder="Prompt" ref={promptRef}></input>
+                <input className="focus:outline-none border border-yellow-900 w-full focus:ring-1 focus:ring-orange-900 font-mono py-1 px-2 bg-orange-100 text-yellow-900 placeholder-yellow-900 pr-12" placeholder="Prompt" ref={promptRef}></input>
                 <button 
                     onClick={(e) => handlePrompt(e, true)} 
-                    className='absolute right-10 top-[28.5px] bg-orange-400 w-8 flex items-center justify-center h-[33px] hover:text-xl'
+                    className='absolute right-10  top-[28.5px] bg-orange-400 w-8 flex items-center justify-center h-[33px] hover:text-xl'
                     disabled={loadingPublish}
                 >
                     {loadingPublish ? (

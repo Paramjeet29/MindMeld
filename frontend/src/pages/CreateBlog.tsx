@@ -53,7 +53,7 @@ export const CreateBlog = () => {
   return (
     <div className="selection:bg-orange-300 max-h-screen max-w-full">
         <form className="mt-12 flex  items-center max-h-screen flex-col space-y-4  ">
-            <TextArea className={"flex font-mono w-[80%] md:w-3/4 lg:w-1/2 space-x-16 justify-center border border-yellow-800  "} ref={titleRef} label="Title" placeholder="Enter the title" />
+            <TextArea className={" flex font-mono w-[80%] md:w-3/4 lg:w-1/2 space-x-16 justify-center border border-yellow-800 "} ref={titleRef} label="Title" placeholder="Enter the title" />
             <TextArea className={"flex font-mono w-[80%] md:w-3/4 lg:w-1/2 h-32 md:h-[250px]  justify-center  space-x-2 border border-yellow-800"} ref={descRef} label="Description" placeholder="Enter the description"  />
             <div className="flex flex-col md:flex-row space-x-2 md:space-x-8 justify-center items-center">
             <button type="button" onClick={(e)=>handleClick(e,true)}

@@ -110,7 +110,6 @@ userRoutes.post('/signup',async(c)=>{
     }
   })
 
-  //update this endpoint to update the password and other details
   userRoutes.post("/userpost", async (c) => {
     const prisma = new PrismaClient({
       datasourceUrl: c.env.DATABASE_URL,
