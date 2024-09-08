@@ -267,31 +267,6 @@ blogRoutes.post('/',async(c)=>{
   }
  })
 
-
-//  blogRoutes.post("/like",async(c)=>{
-//   const prisma = new PrismaClient({
-//     datasourceUrl: c.env.DATABASE_URL,
-    
-//   }).$extends(withAccelerate())
-//   const userId=c.get('userId');
-//   const {postId}= await c.req.json();
-
-//   try{
-//     const response= await prisma.like.create ({
-//       data:{
-//         user:{connect:{id:userId}},
-//         post:{connect:{id:postId}}
-//       }
-//     })
-//     c.status(200);
-//     return c.json(response);
-
-//   }
-//   catch(err){
-//     c.status(500);
-//     return c.json({ message: "An error occurred while liking the blog post" });
-//   }
-//  })
 blogRoutes.post("/like", async (c) => {
   const prisma = new PrismaClient({
     datasourceUrl: c.env.DATABASE_URL,
@@ -548,14 +523,12 @@ blogRoutes.delete('/comments/:id', async (c) => {
     datasourceUrl: c.env.DATABASE_URL,
   }).$extends(withAccelerate())
 
-  const userId = c.get('userId');
   const commentId = c.req.param('id');
 
   try {
     const comment = await prisma.comment.findUnique({
       where: {
         id: commentId,
-        userId
       }
     });
 

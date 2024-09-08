@@ -6,11 +6,24 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUpload } from '@fortawesome/free-solid-svg-icons';
+import { faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import Loader from '../components/Loader';
-
+import { CommentDisplay } from '../components/CommentDisplay';
+import { ProfileCommentDisplay } from '../components/ProfileCommentDisplay';
 export const MyblogDetails = () => {
   const { id } = useParams();
-  
+  interface commentInterface {
+    id: string;
+    content: string;
+    createdAt: string;
+    userId: string;
+    postId: string;
+    user: {
+      name: string;
+    }
+  }
+
+  const [commentDetails, setCommentDetails] = useState<commentInterface[]>([]);
   const titleRef=useRef<HTMLTextAreaElement>(null);
   const contentRef=useRef<HTMLTextAreaElement>(null);
   const [blogDetails, setBlogDetails] = useState({
@@ -42,6 +55,23 @@ export const MyblogDetails = () => {
         setLoading(false);
       }
     };
+
+    const fetchComments = async () => {
+      const token = localStorage.getItem('authToken');
+      try {
+        const response = await axios.get(`https://backend.paramjeetxapp.workers.dev/api/v1/blog/comments/${id}`, {
+          headers: {
+            'Authorization': `${token}`
+          }
+        });
+        if (response.status === 200) {
+          setCommentDetails(response.data);
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchComments();
     fetchingBlog();
   }, [id]);
 
@@ -122,8 +152,36 @@ export const MyblogDetails = () => {
 
   if (loading) return <Loader />;
 
+  const handleCommentDelete = async (commentId: string) => {
+    const token = localStorage.getItem('authToken');
+    const toastId = toast.loading("Deleting comment...");
+    try {
+      const response = await axios.delete(`https://backend.paramjeetxapp.workers.dev/api/v1/blog/comments/${commentId}`, {
+        headers: { 'Authorization': `${token}` }
+      });
+      if (response.status === 200) {
+        toast.update(toastId, {
+          render: "Comment deleted successfully!",
+          type: "success",
+          isLoading: false,
+          autoClose: 3000,
+        });
+        // Update the commentDetails state to remove the deleted comment
+        setCommentDetails(prevComments => prevComments.filter(comment => comment.id !== commentId));
+      }
+    } catch (err) {
+      console.log(err);
+      toast.update(toastId, {
+        render: "Failed to delete comment",
+        type: "error",
+        isLoading: false,
+        autoClose: 3000,
+      });
+    }
+  };
+
   return (
-    <div className="flex flex-col w-full mt-3 px-12 overflow-x-hidden selection:bg-orange-400">
+    <div className="flex flex-col w-full mt-3 px-1 md:px-12 overflow-x-hidden selection:bg-orange-400">
       <div className="w-full flex flex-col sm:flex-row justify-between items-center mb-4">
         <button
           onClick={handleBackClick}
@@ -200,9 +258,9 @@ export const MyblogDetails = () => {
       </div>
 
       <div className="w-full">
-        <div className="text-gray-500 mb-2">
+        <div className="text-gray-500 mb-2 text-sm md:text-xl">
           <h2>
-            <span>Last Edited on </span>
+            <span className=''>Last Edited on </span>
             {blogDetails.createdAt
               ? new Date(blogDetails.createdAt).toLocaleDateString(undefined, {
                   year: 'numeric',
@@ -214,18 +272,32 @@ export const MyblogDetails = () => {
         </div>
         <textarea 
         ref={titleRef}
-          className="text-xl font-medium w-full h-auto  bg-orange-100 break-words border-2 border-orange-900 focus:ring-orange-400 focus:border-orange-400 rounded-md p-2 mb-4"
+          className="text-sm font-medium w-full h-auto  bg-orange-100 break-words border-2 border-orange-900 focus:ring-orange-400 focus:border-orange-400 rounded-md p-2 mb-4"
           defaultValue={blogDetails.title}
           
         ></textarea>
         <textarea 
         ref={contentRef}
-          className=" scrollbar-track-rounded-full scrollbar scrollbar-thumb-orange-300 scrollbar-thumb-rounded-3xl scrollbar-track-orange-200  w-full h-[370px] break-words whitespace-pre-wrap focus:ring-orange-400 focus:border-orange-400 bg-orange-100 border-2 border-orange-900 rounded-md p-2"
+          className="text-sm scrollbar-track-rounded-full scrollbar scrollbar-thumb-orange-300 scrollbar-thumb-rounded-3xl scrollbar-track-orange-200  w-full h-[330px] break-words whitespace-pre-wrap focus:ring-orange-400 focus:border-orange-400 bg-orange-100 border-2 border-orange-900 rounded-md p-2"
           defaultValue={blogDetails.content}
           
         />
       </div>
-
+      <div className="flex flex-col items-center w-full mb-16 mt-2 pb-8 shadow-xl">
+      <h1 className='w-full text-lg md:text-xl font-bold mt-4 md:mx-0 px-6'>Comments</h1>
+        {commentDetails.length === 0 ? (
+          <p className="text-center text-gray-500">No comments found</p>
+        ) : (
+          commentDetails.map((comments) => (
+            <div className="flex justify-center items-center w-full mt-4 md:mx-0 text-xs md:text-base" key={comments.id}>
+              <ProfileCommentDisplay 
+                comments={comments} 
+                handleDelete={handleCommentDelete} 
+              />
+            </div>
+          ))
+        )}
+      </div>
       
     </div>
   );

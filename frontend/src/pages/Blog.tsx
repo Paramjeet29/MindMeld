@@ -220,7 +220,7 @@ export const Blog = () => {
       </div>
 
       <div className="flex justify-center flex-row items-center w-full mt-8">
-        <div className="w-full lg:w-[75%] justify-center flex flex-col items-center shadow-lg">
+        <div className="w-full lg:w-[73%] justify-center flex flex-col items-center shadow-lg">
           <label className="w-full justify-start items-start flex font-semibold">Add comment</label>
           <input
             required
@@ -239,11 +239,14 @@ export const Blog = () => {
       </div>
 
       <div className="flex flex-col items-center w-full mt-4">
-        {commentDetails.map((comments) => (
+      {commentDetails.length === 0 ? (
+          <p className="text-center text-gray-500">No comments found</p>
+        ) : (
+          commentDetails.map((comments) => (
           <div className="flex justify-center items-center w-full mt-2 -translate-x-5 md:mx-0 px-6 text-xs md:text-base" key={comments.id}>
             <CommentDisplay comments={comments} />
           </div>
-        ))}
+        )))}
       </div>
     </div>
   );

@@ -2,6 +2,8 @@ import React, { useContext, useEffect, useState } from 'react';
 import 'react-loading-skeleton/dist/skeleton.css'
 import axios from 'axios';
 import { AuthContext } from '../context/AuthContext';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faComment } from '@fortawesome/free-solid-svg-icons';
 const timeAgo = (date: string): string => {
   const now = new Date();
   const pastDate = new Date(date);
@@ -117,7 +119,7 @@ export const Blogcard: React.FC<BlogcardProps> = ({ blog, fetchLikes, blogClick 
 
   return (
     blog.published && (
-      <div className="relative p-4 h-[250px] md:h-[200px] border-b-2 hover:-translate-y-1 shadow-lg font-mono bg-orange-200 transition-all duration-300 ease-in-out hover:bg-orange-300 hover:shadow-2xl">
+      <div className="relative  p-4 h-[250px] md:h-[200px] border-b-2 hover:-translate-y-1 shadow-lg font-mono bg-orange-200 transition-all duration-300 ease-in-out hover:bg-orange-300 hover:shadow-2xl">
         <div onClick={() => blogClick(blog.id)}>
           <div className="flex max-w-full justify-center items-center mb-2">
             <button className="space-x-1">
@@ -132,7 +134,7 @@ export const Blogcard: React.FC<BlogcardProps> = ({ blog, fetchLikes, blogClick 
           {error && <p className="text-red-500 text-xs absolute bottom-2 left-2">{error}</p>}
         
           <div>
-            <p className="text-xl font-bold font-serif text-yellow-950 break-words">
+            <p className="text-sm md:text-lg font-bold font-serif text-yellow-950 break-words">
               {blog.title.length > 30 ? blog.title.toUpperCase().slice(0, 30) + " ....." : blog.title.toUpperCase()}
             </p>
             <p className="text-yellow-900 text-sm font-serif h-auto pb-5 break-words">
@@ -163,6 +165,7 @@ export const Blogcard: React.FC<BlogcardProps> = ({ blog, fetchLikes, blogClick 
                 </path>
               </svg>
             </div>
+            
           </label>
         </div>
       </div>
