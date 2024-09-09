@@ -36,7 +36,7 @@ export const Feedback = () => {
     setLoading(true);
     try {
       // Send feedback to backend
-      const response = await axios.post("api/v1/feedback", {
+      const response = await axios.post("https://backend.paramjeetxapp.workers.dev/api/v1/feedback", {
         name: name,
         email: email,
         feedback: feedback,

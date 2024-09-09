@@ -39,7 +39,7 @@ export const MyblogDetails = () => {
       setLoading(true);
       const token = localStorage.getItem('authToken');
       try {
-        const response = await axios.get(`api/v1/blog/${id}`, {
+        const response = await axios.get(`https://backend.paramjeetxapp.workers.dev/api/v1/blog/${id}`, {
           headers: {
             'Authorization': `${token}`
           }
@@ -57,7 +57,7 @@ export const MyblogDetails = () => {
     const fetchComments = async () => {
       const token = localStorage.getItem('authToken');
       try {
-        const response = await axios.get(`api/v1/blog/comments/${id}`, {
+        const response = await axios.get(`https://backend.paramjeetxapp.workers.dev/api/v1/blog/comments/${id}`, {
           headers: {
             'Authorization': `${token}`
           }
@@ -91,7 +91,7 @@ export const MyblogDetails = () => {
     setLoading(true);
     const token = localStorage.getItem('authToken');
     try {
-      const response = await axios.put(`api/v1/blog/edit/${id}`, {
+      const response = await axios.put(`https://backend.paramjeetxapp.workers.dev/api/v1/blog/edit/${id}`, {
         title:title,
         content:content
       }, {
@@ -114,7 +114,7 @@ export const MyblogDetails = () => {
     setLoading(true);
     const token = localStorage.getItem('authToken');
     try {
-      const response = await axios.put(`api/v1/blog/publish/${id}`, {}, {
+      const response = await axios.put(`https://backend.paramjeetxapp.workers.dev/api/v1/blog/publish/${id}`, {}, {
         headers: { 'Authorization': `${token}` }
       });
       if (response.status === 200) {
@@ -133,7 +133,7 @@ export const MyblogDetails = () => {
     setLoading(true);
     const token = localStorage.getItem('authToken');
     try {
-      const response = await axios.delete(`api/v1/blog/${id}`, {
+      const response = await axios.delete(`https://backend.paramjeetxapp.workers.dev/api/v1/blog/${id}`, {
         headers: { 'Authorization': `${token}` }
       });
       if (response.status === 200) {
@@ -154,7 +154,7 @@ export const MyblogDetails = () => {
     const token = localStorage.getItem('authToken');
     const toastId = toast.loading("Deleting comment...");
     try {
-      const response = await axios.delete(`api/v1/blog/comments/${commentId}`, {
+      const response = await axios.delete(`https://backend.paramjeetxapp.workers.dev/api/v1/blog/comments/${commentId}`, {
         headers: { 'Authorization': `${token}` }
       });
       if (response.status === 200) {

@@ -31,7 +31,7 @@ export const FeedbackModal: React.FC<{ isOpen: boolean; onClose: () => void }> =
     }
     setLoading(true);
     try {
-      const response = await axios.post("api/v1/feedback", {
+      const response = await axios.post("https://backend.paramjeetxapp.workers.dev/api/v1/feedback", {
         name: name,
         email: email,
         feedback: feedback,

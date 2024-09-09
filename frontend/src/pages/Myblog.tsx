@@ -29,7 +29,7 @@ export const Myblog = () => {
       if (!user?.id) return;
       try {
         setIsLoading(true);
-        const response = await axios.post("api/v1/user/userpost", {
+        const response = await axios.post("https://backend.paramjeetxapp.workers.dev/api/v1/user/userpost", {
           id: user.id
         });
         if (response.data) {

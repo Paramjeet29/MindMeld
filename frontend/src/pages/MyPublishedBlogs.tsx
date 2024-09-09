@@ -29,7 +29,7 @@ export const MyPublishedBlogs =()=> {
       if (!user?.id) return;
       try {
         setIsLoading(true);
-        const response = await axios.post("api/v1/user/userpost", {
+        const response = await axios.post("https://backend.paramjeetxapp.workers.dev/api/v1/user/userpost", {
           id: user.id
         });
         console.log("response", response.data);
@@ -65,7 +65,7 @@ if (isLoading) {
 const fetchLikesForBlog = async (blogId: string) => {
   try {
       const token = localStorage.getItem('authToken');
-      const response = await axios.get(`api/v1/blog/like/${blogId}`, {
+      const response = await axios.get(`https://backend.paramjeetxapp.workers.dev/api/v1/blog/like/${blogId}`, {
           headers: {
               'Authorization': `${token}`
           }

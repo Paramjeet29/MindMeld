@@ -64,7 +64,7 @@ export const Blogcard: React.FC<BlogcardProps> = ({ blog, fetchLikes, blogClick 
   const checkIfLiked = async (blogId: string) => {
     try {
       const token = localStorage.getItem('authToken');
-      const response = await axios.get(`api/v1/blog/like/${blogId}`, {
+      const response = await axios.get(`https://backend.paramjeetxapp.workers.dev/api/v1/blog/like/${blogId}`, {
         headers: {
           'Authorization': `${token}`
         }
@@ -86,14 +86,14 @@ export const Blogcard: React.FC<BlogcardProps> = ({ blog, fetchLikes, blogClick 
     const token = localStorage.getItem('authToken');
     try {
       if (isLiked) {
-        await axios.delete(`api/v1/blog/like/${blog.id}`, {
+        await axios.delete(`https://backend.paramjeetxapp.workers.dev/api/v1/blog/like/${blog.id}`, {
           headers: {
             'Authorization': `${token}`
           }
         });
         setLikes(prevLikes => prevLikes - 1);
       } else {
-        await axios.post(`api/v1/blog/like`, 
+        await axios.post(`https://backend.paramjeetxapp.workers.dev/api/v1/blog/like`, 
         { postId: blog.id },
         {
           headers: {
