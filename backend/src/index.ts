@@ -94,8 +94,8 @@ const app = new Hono<{
 }>();
 
 app.use('/api/v1/*', cors({
-  origin: [ 
-    'https://vercel.com/paramjeet29s-projects/mind-meld/7LS3fcH8nfThxr3hpmRGSwnGdxP6'
+  origin: [ 'http://localhost:5173',
+    'https://mind-meld-ibvku2aoa-paramjeet29s-projects.vercel.app'
   ],
   allowHeaders: ['Content-Type', 'Authorization'],
   allowMethods: ['POST', 'GET', 'OPTIONS', 'PUT', 'DELETE'],
@@ -106,7 +106,7 @@ app.use('/api/v1/*', cors({
 
 app.options('*', (c) => {
   const origin = c.req.header('Origin');
-  const allowedOrigins = ['https://vercel.com/paramjeet29s-projects/mind-meld/7LS3fcH8nfThxr3hpmRGSwnGdxP6'];
+  const allowedOrigins = ['http://localhost:5173','https://mind-meld-ibvku2aoa-paramjeet29s-projects.vercel.app'];
 
   if (typeof origin === 'string' && allowedOrigins.includes(origin)) {
     c.header('Access-Control-Allow-Origin', origin);

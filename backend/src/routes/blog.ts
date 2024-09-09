@@ -43,9 +43,6 @@ blogRoutes.use('/*', async (c, next) => {
     }  
 })
 
-blogRoutes.use(cors({
-    origin: 'http://localhost:5173', // Allow only this origin
-  }));
 
 blogRoutes.post('/',async(c)=>{
     const userId=c.get('userId');

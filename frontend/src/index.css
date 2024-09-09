@@ -1,6 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
 .space-mono-regular {
     font-family: "Space Mono", monospace;
     font-weight: 400;

@@ -15,6 +15,7 @@ import {MyPublishedBlogs} from "./pages/MyPublishedBlogs"
 import {MyDraftBlogs} from "./pages/MyDraftBlogs"
 import { ToastContainer } from 'react-toastify';
 import { GenerateAiBlog } from "./pages/GenerateAiBlog"
+
 function App() {
   return (
     <AuthProvider>

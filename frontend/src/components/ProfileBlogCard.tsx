@@ -61,7 +61,7 @@ const ProfileBlogCard: React.FC<BlogcardProps> = ({blog,fetchLikes,blogClick }) 
   const checkIfLiked = async (blogId: string) => {
     try {
       const token = localStorage.getItem('authToken');
-      const response = await axios.get(`api/v1/blog/like/${blogId}`, {
+      const response = await axios.get(`https://backend.paramjeetxapp.workers.dev/api/v1/blog/like/${blogId}`, {
         headers: {
           'Authorization': `${token}`
         }
@@ -110,7 +110,7 @@ const ProfileBlogCard: React.FC<BlogcardProps> = ({blog,fetchLikes,blogClick }) 
     }
   };
   return (
-    <div className="relative p-4 h-[250px] md:h-[230px] border-b-2 hover:-translate-y-1 shadow-lg font-mono bg-orange-200 transition-all duration-300 ease-in-out hover:bg-orange-300 hover:shadow-2xl">
+    <div className="relative p-4 h-[250px] md:h-[230px] w-[300px] border-b-2 hover:-translate-y-1 shadow-lg font-mono bg-orange-200 transition-all duration-300 ease-in-out hover:bg-orange-300 hover:shadow-2xl">
         <div onClick={() => blogClick(blog.id)}>
           
           {error && <p className="text-red-500 text-xs absolute bottom-2 left-2">{error}</p>}

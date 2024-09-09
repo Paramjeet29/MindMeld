@@ -11,15 +11,7 @@ export const userRoutes=new Hono<{
       }
     }>();
 
-    // userRoutes.use(cors({
-    //   origin: [
-    //     'http://localhost:5173', 
-    //     'https://mind-meld-2ze4.vercel.app'
-    //   ]
-    // }));
-    
 
-    
 userRoutes.post('/signup',async(c)=>{
     const prisma = new PrismaClient({
       datasourceUrl: c.env.DATABASE_URL,
