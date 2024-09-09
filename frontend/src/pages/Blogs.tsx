@@ -31,7 +31,7 @@ export const Blogs: React.FC = () => {
         const fetchData = async () => {
             const token = localStorage.getItem('authToken');
             try {
-                const response = await axios.get("https://backend.paramjeetxapp.workers.dev/api/v1/blog/bulk", {
+                const response = await axios.get("api/v1/blog/bulk", {
                     headers: {
                         'Authorization': `${token}`
                     }
@@ -63,7 +63,7 @@ export const Blogs: React.FC = () => {
     const fetchLikesForBlog = async (blogId: string) => {
         try {
             const token = localStorage.getItem('authToken');
-            const response = await axios.get(`https://backend.paramjeetxapp.workers.dev/api/v1/blog/like/${blogId}`, {
+            const response = await axios.get(`api/v1/blog/like/${blogId}`, {
                 headers: {
                     'Authorization': `${token}`
                 }

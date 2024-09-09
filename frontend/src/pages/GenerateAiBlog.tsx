@@ -23,7 +23,7 @@ export const GenerateAiBlog = () => {
         const token = localStorage.getItem('authToken');
         setLoadingPublish(true);
         try {
-            const response = await axios.post("https://backend.paramjeetxapp.workers.dev/api/v1/blog/generate", {
+            const response = await axios.post("api/v1/blog/generate", {
                 prompt: prompt
             }, {
                 headers: {

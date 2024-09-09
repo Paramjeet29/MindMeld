@@ -1,4 +1,3 @@
-
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { useEffect, useRef, useState } from "react";
@@ -42,7 +41,7 @@ export const Blog = () => {
       setLoading(true);
       const token = localStorage.getItem('authToken');
       try {
-        const response = await axios.get(`https://backend.paramjeetxapp.workers.dev/api/v1/blog/${id}`, {
+        const response = await axios.get(`api/v1/blog/${id}`, {
           headers: {
             'Authorization': `${token}`
           }
@@ -60,7 +59,7 @@ export const Blog = () => {
     const fetchComments = async () => {
       const token = localStorage.getItem('authToken');
       try {
-        const response = await axios.get(`https://backend.paramjeetxapp.workers.dev/api/v1/blog/comments/${id}`, {
+        const response = await axios.get(`/api/v1/blog/comments/${id}`, {
           headers: {
             'Authorization': `${token}`
           }
@@ -94,7 +93,7 @@ export const Blog = () => {
     const token = localStorage.getItem('authToken');
     const toastId = toast.loading("Submitting your comment...");
     try {
-      const response = await axios.post(`https://backend.paramjeetxapp.workers.dev/api/v1/blog/comments`, {
+      const response = await axios.post(`api/v1/blog/comments`, {
         postId: id,
         content: comment
       }, {
@@ -114,7 +113,7 @@ export const Blog = () => {
 
         const fetchComments = async () => {
           try {
-            const response = await axios.get(`https://backend.paramjeetxapp.workers.dev/api/v1/blog/comments/${id}`, {
+            const response = await axios.get(`api/v1/blog/comments/${id}`, {
               headers: {
                 'Authorization': `${token}`
               }

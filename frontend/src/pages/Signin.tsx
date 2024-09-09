@@ -28,7 +28,7 @@ export const Signin = () => {
     setLoading(true);
   
     try {
-      const response = await axios.post("https://backend.paramjeetxapp.workers.dev/api/v1/user/signin", {
+      const response = await axios.post("api/v1/user/signin", {
         email,
         password,
       });

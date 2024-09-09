@@ -24,7 +24,7 @@ export const CreateBlog = () => {
         publish?setLoadingPublish(true):setLoadingDraft(true);
         try{
             if(title==" "){}
-            const response=await axios.post("https://backend.paramjeetxapp.workers.dev/api/v1/blog",{
+            const response=await axios.post("api/v1/blog",{
                 title:title,
                 content:desc,
                 published:publish

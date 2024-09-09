@@ -16,9 +16,14 @@ export const blogRoutes= new Hono<{
       }
     }
 >();
-blogRoutes.use(cors({
-    origin: 'http://localhost:5173', // Allow only this origin
-  }));
+
+// blogRoutes.use(cors({
+//   origin: [
+//     'http://localhost:5173', 
+//     'https://mind-meld-2ze4.vercel.app'
+//   ]
+// }));
+
 
 blogRoutes.use('/*', async (c, next) => {
 	const jwt = c.req.header('Authorization');

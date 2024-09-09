@@ -28,7 +28,7 @@ export const Profile = () => {
         const newpassword=newpasswordRef.current?.value;
         try{
           setLoading(true);
-          const response=await axios.post("https://backend.paramjeetxapp.workers.dev/api/v1/user/edit",{ 
+          const response=await axios.post("api/v1/user/edit",{ 
                   id: user.id,
                   name,
                   email,

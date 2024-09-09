@@ -29,7 +29,7 @@ export const Myblog = () => {
       if (!user?.id) return;
       try {
         setIsLoading(true);
-        const response = await axios.post("https://backend.paramjeetxapp.workers.dev/api/v1/user/userpost", {
+        const response = await axios.post("api/v1/user/userpost", {
           id: user.id
         });
         if (response.data) {
@@ -79,7 +79,7 @@ export const Myblog = () => {
   const fetchLikesForBlog = async (blogId: string) => {
     try {
         const token = localStorage.getItem('authToken');
-        const response = await axios.get(`https://backend.paramjeetxapp.workers.dev/api/v1/blog/like/${blogId}`, {
+        const response = await axios.get(`api/v1/blog/like/${blogId}`, {
             headers: {
                 'Authorization': `${token}`
             }
@@ -114,11 +114,7 @@ export const Myblog = () => {
           `}
         >
           {posts.map((post) => (
-            <div key={post.id} className={`hover:cursor-pointer flex-none  md:h-[230px] h-[250px] mx-1
-              ${posts.length==1?'md:w-[30%] w-[90%]':''}
-              ${posts.length==2?'md:w-[30%] w-[90%]':''}
-              ${posts.length==3?'md:w-[30%] w-[90%]':''}
-            `}>
+            <div key={post.id} className={`hover:cursor-pointer flex-none  md:h-[230px] h-[250px] mx-1`}>
               <ProfileBlogCard blog={post} blogClick={handleBlogClick}   fetchLikes={fetchLikesForBlog} />
             </div>
           ))}
